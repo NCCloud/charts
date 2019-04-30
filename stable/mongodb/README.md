@@ -147,6 +147,12 @@ The following table lists the configurable parameters of the MongoDB chart and t
 | `metrics.readinessProbe.timeoutSeconds`            | Timeout for Readiness Check of Prometheus metrics exporter                                   | `1`                                                     |
 | `metrics.readinessProbe.failureThreshold`           | Failure Threshold for Readiness Check of Prometheus metrics exporter                        | `3`                                                     |
 | `metrics.readinessProbe.successThreshold`           | Success Threshold for Readiness Check of Prometheus metrics exporter                        | `1`                                                     |
+| `vault.enabled`                                    | Specify if Vault secrets injection should be enabled                                         | `false`                                                 |
+| `vault.mongodbRootPassword`                        | Vault path to root password credential                                                       | `nil`                                                   |
+| `vault.mongodbUsername`                            | Vault path to custom user username                                                           | `nil`                                                   |
+| `vault.mongodbPassword`                            | Vault path to custom user password                                                           | `nil`                                                   |
+| `vault.mongodbDatabase`                            | Vault path to database to create                                                             | `nil`                                                   |
+| `vault.replicaSetKey`                              | Vault path to key used for authentication in the replica set                                 | `nil`                                                   |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
@@ -166,6 +172,15 @@ $ helm install --name my-release -f values.yaml stable/mongodb
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+## Vault integration
+
+This is a _fork_ since here in Namecheap we're using Banzai Cloud's [Bank Vaults](https://github.com/banzaicloud/bank-vaults)
+to get secrets directly injected at _Pod_ level without need top rely on _Secret_
+resources.
+
+You can enable this integration declaring the `.Values.vault` values and setting
+`.Values.usePassword` to `false` since this has priority.
 
 ## Replication
 

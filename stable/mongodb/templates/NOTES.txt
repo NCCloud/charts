@@ -1,3 +1,13 @@
+{{- if .Values.vault.enabled }}
+-------------------------------------------------------------------------------
+ WARNING
+
+    Your using Bank-Vault provided by BanzaiCloud, this means you have
+    installed the Mutating Admission Webhook, defined secrets, provided role
+    and policy: otherwise, your MongoDB instance will never spin up!
+
+-------------------------------------------------------------------------------
+{{- end}}
 {{- if contains .Values.service.type "LoadBalancer" }}
 {{- if not .Values.mongodbRootPassword }}
 -------------------------------------------------------------------------------

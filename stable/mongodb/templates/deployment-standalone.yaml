@@ -60,6 +60,9 @@ spec:
       - name: {{ template "mongodb.fullname" . }}
         image: {{ template "mongodb.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        command:
+          - "/app-entrypoint.sh"
+          - "/run.sh"
         {{- if .Values.securityContext.enabled }}
         securityContext:
           runAsNonRoot: true
@@ -76,10 +79,16 @@ spec:
             secretKeyRef:
               name: {{ if .Values.existingSecret }}{{ .Values.existingSecret }}{{- else }}{{ template "mongodb.fullname" . }}{{- end }}
               key: mongodb-root-password
+        {{- else if .Values.vault.enabled }}
+        - name: MONGODB_ROOT_PASSWORD
+          value: {{ required "A valid .Values.vault.mongodbRootPassword entry required!" .Values.vault.mongodbRootPassword | quote }}
         {{- end }}
         {{- if .Values.mongodbUsername }}
         - name: MONGODB_USERNAME
           value: {{ .Values.mongodbUsername | quote }}
+        {{- else if and .Values.vault.enabled .Values.vault.mongodbUsername }}
+        - name: MONGODB_USERNAME
+          value: {{ .Values.vault.mongodbUsername | quote }}
         {{- end }}
         {{- if and .Values.mongodbUsername .Values.mongodbDatabase }}
         - name: MONGODB_PASSWORD
@@ -87,6 +96,9 @@ spec:
             secretKeyRef:
               name: {{ if .Values.existingSecret }}{{ .Values.existingSecret }}{{- else }}{{ template "mongodb.fullname" . }}{{- end }}
               key: mongodb-password
+        {{- else if and .Values.vault.enabled .Values.vault.mongodbUsername .Values.vault.mongodbDatabase }}
+        - name: MONGODB_PASSWORD
+          value: {{ required "A valid .Values.vault.mongodbPassword entry required!" .Values.vault.mongodbPassword | quote }}
         {{- end }}
         - name: MONGODB_SYSTEM_LOG_VERBOSITY
           value: {{ .Values.mongodbSystemLogVerbosity | quote }}
@@ -99,6 +111,9 @@ spec:
         {{- if .Values.mongodbDatabase }}
         - name: MONGODB_DATABASE
           value: {{ .Values.mongodbDatabase | quote }}
+        {{- else if and .Values.vault.enabled .Values.vault.mongodbDatabase }}
+        - name: MONGODB_DATABASE
+          value: {{ .Values.vault.mongodbDatabase | quote }}
         {{- end }}
         - name: MONGODB_ENABLE_IPV6
         {{- if .Values.mongodbEnableIPv6 }}
@@ -203,6 +218,9 @@ spec:
         resources:
 {{ toYaml .Values.metrics.resources | indent 10 }}
 {{- end }}
+      {{- if .Values.vault.enabled }}
+      serviceAccount: {{ template "mongodb.fullname" . }}
+      {{- end }}
       volumes:
       {{- if (.Files.Glob "files/docker-entrypoint-initdb.d/*[sh|js|json]") }}
       - name: custom-init-scripts

@@ -64,6 +64,9 @@ spec:
         - name: {{ template "mongodb.name" . }}-arbiter
           image: {{ template "mongodb.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - "/app-entrypoint.sh"
+            - "/run.sh"
           {{- if .Values.securityContext.enabled }}
           securityContext:
             runAsNonRoot: true
@@ -110,6 +113,11 @@ spec:
               secretKeyRef:
                 name: {{ if .Values.existingSecret }}{{ .Values.existingSecret }}{{- else }}{{ template "mongodb.fullname" . }}{{- end }}
                 key: mongodb-replica-set-key
+            {{- else if .Values.vault.enabled }}
+          - name: MONGODB_PRIMARY_ROOT_PASSWORD
+            value: {{ required "A valid .Values.vault.mongodbRootPassword entry required!" .Values.vault.mongodbRootPassword | quote }}
+          - name: MONGODB_REPLICA_SET_KEY
+            value: {{ required "A valid .Values.vault.replicaSetKey entry required!" .Values.vault.replicaSetKey | quote }}
             {{- end }}
           - name: MONGODB_ENABLE_IPV6
           {{- if .Values.mongodbEnableIPv6 }}
@@ -155,6 +163,9 @@ spec:
           {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+      {{- if .Values.vault.enabled }}
+      serviceAccount: {{ template "mongodb.fullname" . }}
+      {{- end }}
       volumes:
       {{- if .Values.configmap }}
         - name: config

@@ -69,6 +69,9 @@ spec:
         - name: {{ template "mongodb.name" . }}-primary
           image: {{ template "mongodb.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - "/app-entrypoint.sh"
+            - "/run.sh"
           {{- if .Values.securityContext.enabled }}
           securityContext:
             runAsNonRoot: true
@@ -105,10 +108,16 @@ spec:
           {{- if .Values.mongodbUsername }}
           - name: MONGODB_USERNAME
             value: {{ .Values.mongodbUsername | quote }}
+          {{- else if and .Values.vault.enabled .Values.vault.mongodbUsername }}
+          - name: MONGODB_USERNAME
+            value: {{ .Values.vault.mongodbUsername | quote }}
           {{- end }}
           {{- if .Values.mongodbDatabase }}
           - name: MONGODB_DATABASE
             value: {{ .Values.mongodbDatabase | quote }}
+          {{- else if and .Values.vault.enabled .Values.vault.mongodbDatabase }}
+          - name: MONGODB_DATABASE
+            value: {{ .Values.vault.mongodbDatabase | quote }}
           {{- end }}
             {{- if .Values.usePassword }}
             {{- if and .Values.mongodbUsername (or .Values.mongodbPassword .Values.existingSecret) }}
@@ -128,6 +137,15 @@ spec:
               secretKeyRef:
                 name: {{ if .Values.existingSecret }}{{ .Values.existingSecret }}{{- else }}{{ template "mongodb.fullname" . }}{{- end }}
                 key: mongodb-replica-set-key
+            {{- else if .Values.vault.enabled }}
+            {{- if and .Values.vault.enabled .Values.vault.mongodbUsername .Values.vault.mongodbDatabase }}
+          - name: MONGODB_PASSWORD
+            value: {{ required "A valid .Values.vault.mongodbPassword entry required!" .Values.vault.mongodbPassword | quote }}
+            {{- end }}
+          - name: MONGODB_ROOT_PASSWORD
+            value: {{ required "A valid .Values.vault.mongodbRootPassword entry required!" .Values.vault.mongodbRootPassword | quote }}
+          - name: MONGODB_REPLICA_SET_KEY
+            value: {{ required "A valid .Values.vault.replicaSetKey entry required!" .Values.vault.replicaSetKey | quote }}
             {{- end }}
           - name: MONGODB_ENABLE_IPV6
           {{- if .Values.mongodbEnableIPv6 }}
@@ -229,6 +247,9 @@ spec:
           resources:
 {{ toYaml .Values.metrics.resources | indent 12 }}
 {{- end }}
+      {{- if .Values.vault.enabled }}
+      serviceAccount: {{ template "mongodb.fullname" . }}
+      {{- end }}
       volumes:
         {{- if (.Files.Glob "files/docker-entrypoint-initdb.d/*[sh|js|json]") }}
         - name: custom-init-scripts
