@@ -168,6 +168,10 @@ and their default values.
 | `busyboxImage.tag`                             | Busybox initContainer image tag                                                                                                                                                                       | `latest`                                                   |
 | `busyboxImage.pullPolicy`                      | Busybox initContainer image pullPolicy                                                                                                                                                                | `Always`                                                   |
 | `clusterDomain`                                | The internal Kubernetes cluster domain                                                                                                                                                                | `cluster.local`                                            |
+| `vault.enabled`                                | Enable the use of Vault secrets thanks to Bank Vaults                                                                                                                                                 | `false`                                                    |
+| `vault.rabbitmqUsername`                       | Path to Vault secret of RabbitMQ application username                                                                                                                                                 | `nil`                                                      |
+| `vault.rabbitmqPassword`                       | Path to Vault secret of RabbitMQ application password                                                                                                                                                 | `nil`                                                      |
+| `vault.rabbitmqErlangCookie`                   | Path to Vault secret of Erlang cookie                                                                                                                                                                 | `nil`                                                      |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -189,6 +193,15 @@ $ helm install --name my-release -f values.yaml stable/rabbitmq-ha
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+### Vault integration
+
+This is a fork sinced we're using [Bank Vaults](https://github.com/banzaicloud/bank-vaults)
+that enabled to inject credentials without the need of handling _Secret_
+resources.
+
+Just need to turn it on toggling `.Values.vault.enabled` and specify full qualified
+secret path for RabbitMQ _username_, _password_ and _erlang cookie_.
 
 ### Custom ConfigMap
 

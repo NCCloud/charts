@@ -507,3 +507,7 @@ clusterDomain: cluster.local
 podDisruptionBudget: {}
   # maxUnavailable: 1
   # minAvailable: 1
+
+## Vault Banks integration: disabled by default
+vault:
+  enabled: false

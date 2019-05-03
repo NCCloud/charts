@@ -59,6 +59,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          command:
+          - docker-entrypoint.sh
+          - rabbitmq-server
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: epmd
@@ -137,11 +140,16 @@ spec:
               value: .{{ template "rabbitmq-ha.fullname" . }}-discovery.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}
             - name: K8S_SERVICE_NAME
               value: {{ template "rabbitmq-ha.fullname" . }}-discovery
+            {{- if .Values.vault.enabled }}
+            - name: RABBITMQ_ERLANG_COOKIE
+              value: {{ required "A valid .Values.vault.rabbitmqErlangCookie entry required!" .Values.vault.rabbitmqErlangCookie | quote }}
+            {{- else }}
             - name: RABBITMQ_ERLANG_COOKIE
               valueFrom:
                 secretKeyRef:
                   name: {{ template "rabbitmq-ha.secretName" . }}
                   key: rabbitmq-erlang-cookie
+            {{- end }}
             {{- if .Values.rabbitmqHipeCompile }}
             - name: RABBITMQ_HIPE_COMPILE
               value: {{ .Values.rabbitmqHipeCompile | quote }}
@@ -178,6 +186,12 @@ spec:
             - name: RABBIT_CAPABILITIES
               value: "{{ .Values.prometheus.exporter.capabilities }}"
             {{- end }}
+            {{- if .Values.vault.enabled }}
+            - name: RABBIT_USER
+              value: {{ required "A valid .Values.vault.rabbitmqUsername entry required!" .Values.vault.rabbitmqUsername | quote }}
+            - name: RABBIT_PASSWORD
+              value: {{ required "A valid .Values.vault.rabbitmqPassword entry required!" .Values.vault.rabbitmqPassword | quote }}
+            {{- else }}
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
@@ -188,6 +202,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "rabbitmq-ha.secretName" . }}
                   key: rabbitmq-password
+            {{- end }}
             {{- range $key, $value := .Values.prometheus.exporter.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}

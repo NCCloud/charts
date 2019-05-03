@@ -1,4 +1,14 @@
 ** Please be patient while the chart is being deployed **
+{{- if .Values.vault.enabled }}
+-------------------------------------------------------------------------------
+ WARNING
+
+    Your using Bank-Vault provided by BanzaiCloud, this means you have
+    installed the Mutating Admission Webhook, defined secrets, provided role
+    and policy: otherwise, your MongoDB instance will never spin up!
+
+-------------------------------------------------------------------------------
+{{- end}}
 
   Credentials:
 
