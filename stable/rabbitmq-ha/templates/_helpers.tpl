@@ -68,11 +68,19 @@ users, virtual hosts, permissions and parameters) to load by the management plug
       "password": {{ .Values.managementPassword | quote }},
       "tags": "management"
     },
+{{- if .Values.vault.enabled }}
+    {
+      "name": {{ .Values.vault.rabbitmqUsername | quote }},
+      "password": {{ .Values.vault.rabbitmqPassword | quote }},
+      "tags": "administrator"
+    }
+{{- else }}
     {
       "name": {{ .Values.rabbitmqUsername | quote }},
       "password": {{ .Values.rabbitmqPassword | quote }},
       "tags": "administrator"
-    }{{- if .Values.definitions.users -}},
+    }
+{{- end }}{{- if .Values.definitions.users -}},
 {{ .Values.definitions.users | indent 4 }}
 {{- end }}
   ],

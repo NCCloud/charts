@@ -60,8 +60,16 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           command:
-          - docker-entrypoint.sh
-          - rabbitmq-server
+          - sh
+          - -c
+          - |
+{{- if .Values.vault.enabled }}
+            cp /etc/definitions/{{ .Values.definitionsSource }} /tmp/{{ .Values.definitionsSource }};
+            sed -ie "s@vault:secret/rabbitmq/dots#USERNAME@$RABBIT_USER@g" /tmp/{{ .Values.definitionsSource }};
+            sed -ie "s@vault:secret/rabbitmq/dots#PASSWORD@$RABBIT_PASSWORD@g" /tmp/{{ .Values.definitionsSource }};
+            cat /tmp/{{ .Values.definitionsSource }} > /etc/definitions/{{ .Values.definitionsSource }};
+{{- end }}
+            docker-entrypoint.sh rabbitmq-server;
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: epmd
@@ -143,6 +151,10 @@ spec:
             {{- if .Values.vault.enabled }}
             - name: RABBITMQ_ERLANG_COOKIE
               value: {{ required "A valid .Values.vault.rabbitmqErlangCookie entry required!" .Values.vault.rabbitmqErlangCookie | quote }}
+            - name: RABBIT_USER
+              value: {{ required "A valid .Values.vault.rabbitmqUsername entry required!" .Values.vault.rabbitmqUsername | quote }}
+            - name: RABBIT_PASSWORD
+              value: {{ required "A valid .Values.vault.rabbitmqPassword entry required!" .Values.vault.rabbitmqPassword | quote }}
             {{- else }}
             - name: RABBITMQ_ERLANG_COOKIE
               valueFrom:
@@ -161,9 +173,16 @@ spec:
               mountPath: /var/lib/rabbitmq
             - name: config
               mountPath: /etc/rabbitmq
+            {{- if .Values.vault.enabled }}
+            - name: config
+              mountPath: /etc/definitions/{{ .Values.definitionsSource }}
+              subPath: {{ .Values.definitionsSource | quote }}
+              readOnly: false
+            {{- else }}
             - name: definitions
               mountPath: /etc/definitions
               readOnly: true
+            {{- end }}
             {{- if .Values.rabbitmqCert.enabled }}
             - name: cert
               mountPath: /etc/cert
@@ -251,12 +270,14 @@ spec:
         - name: configmap
           configMap:
             name: {{ template "rabbitmq-ha.fullname" . }}
+        {{- if not .Values.vault.enabled }}
         - name: definitions
           secret:
             secretName: {{ template "rabbitmq-ha.secretName" . }}
             items:
             - key: {{ .Values.definitionsSource }}
               path: definitions.json
+        {{- end }}
         {{- if .Values.rabbitmqCert.enabled }}
         - name: cert
           secret:

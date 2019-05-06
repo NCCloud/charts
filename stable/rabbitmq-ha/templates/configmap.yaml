@@ -12,6 +12,10 @@ metadata:
 {{ toYaml .Values.extraLabels | indent 4 }}
 {{- end }}
 data:
+{{- if .Values.vault.enabled }}
+  {{ .Values.definitionsSource }}: |
+{{ include "rabbitmq-ha.definitions" . | indent 4 }}
+{{- end}}
   enabled_plugins: |
     [
 {{ .Values.extraPlugins | indent 6 }}
