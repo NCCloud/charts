@@ -1,0 +1,33 @@
+image:
+  repository: quay.io/easywp/mayfly
+  tag: latest
+
+replicas: 1
+
+env: []
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "2Gi"
+  requests:
+    cpu: "250m"
+    memory: "1Gi"
+
+tolerations: []
+affinity: {}
+
+serviceMonitor:
+  enabled: false
+  additionalLabels: {}
+
+prometheusRule:
+  enabled: true
+  additionalLabels: {}
+  builtInRules:
+    reconcileErrors: true
+    down: true
+  additionalRules: []
+
+imagePullSecretName: ""
+dockerconfigjson: ""
