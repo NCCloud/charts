@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  HELM_DOCS_VERSION: "1.11.0"
+
+jobs:
+  release:
+    name: Release
+    runs-on: [self-hosted, docker]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+      - name: Generate Docs
+        run: |
+          curl --silent --show-error --fail --location \
+            --output /tmp/helm-docs.tar.gz https://github.com/norwoodj/helm-docs/releases/download/v${{ env.HELM_DOCS_VERSION }}/helm-docs_${{ env.HELM_DOCS_VERSION }}_Linux_x86_64.tar.gz
+          tar -xf /tmp/helm-docs.tar.gz -C /tmp helm-docs
+          /tmp/helm-docs
+      - name: Push Changes
+        run: |
+          git add .
+          if [[ `git status --porcelain` ]]; then
+            git commit -am "Documentations generated."
+            git push
+          fi
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Release Chart
+        uses: helm/chart-releaser-action@v1.5.0
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
