@@ -1,0 +1,41 @@
+{{- if .Values.prometheusRule.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: mayfly
+    {{- if .Values.prometheusRule.additionalLabels }}
+{{- toYaml .Values.prometheusRule.additionalLabels | nindent 4 }}
+    {{- end }}
+  name: mayfly
+  namespace: {{ .Release.Namespace }}
+spec:
+  groups:
+  - name: mayfly.rules
+    rules:
+    {{- if .Values.prometheusRule.builtInRules.reconcileErrors }}
+    - alert: MayflyReconcileErrors
+      expr: rate(controller_runtime_reconcile_errors_total{job="mayfly"}[5m]) > 0.1
+      for: 10m
+      labels:
+        severity: warning-devops
+      annotations:
+        dashboard: mayfly-operator
+        description: 'Errors while reconciling `{{`{{ $labels.controller }}`}}` controller of Mayfly in `{{`{{ $labels.namespace }}`}}` Namespace.'
+        summary: Mayfly reconcile is in bad shape.
+    {{- end }}
+    {{- if .Values.prometheusRule.builtInRules.down }}
+    - alert: MayflyDown
+      expr: absent(up{job="mayfly"})
+      for: 10m
+      labels:
+        severity: warning-devops
+      annotations:
+        dashboard: mayfly-operator
+        description: Mayfly has disappeared from Prometheus target discovery.
+        summary: Mayfly is down.
+    {{- end }}
+    {{- if .Values.prometheusRule.additionalRules }}
+    {{- toYaml .Values.prometheusRule.additionalRules | nindent 4 }}
+    {{- end }}
+{{- end }}
