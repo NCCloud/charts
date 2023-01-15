@@ -1,0 +1,34 @@
+name: Generate Docs
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  HELM_DOCS_VERSION: "1.11.0"
+
+jobs:
+  lint:
+    runs-on: [self-hosted, docker]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup helm-docs
+        run: |
+          wget https://github.com/norwoodj/helm-docs/releases/download/v${{ env.HELM_DOCS_VERSION }}/helm-docs_${{ env.HELM_DOCS_VERSION }}_Linux_x86_64.tar.gz
+          tar -xzvf helm-docs_{{ env.HELM_DOCS_VERSION }}_Linux_x86_64.tar.gz helm-docs
+      - name: Generate Readmes
+        run: |
+          helm-docs
+      - name: Push Changes
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add .
+          if [[ `git status --porcelain` ]]; then
+            git commit -am "Readme Documentations has been generated."
+            git push
+          fi
