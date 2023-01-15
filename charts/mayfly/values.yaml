@@ -1,5 +1,5 @@
 image:
-  repository: quay.io/easywp/mayfly
+  repository: ghcr.io/nccloud/mayfly
   tag: latest
 
 replicas: 1
@@ -22,7 +22,7 @@ serviceMonitor:
   additionalLabels: {}
 
 prometheusRule:
-  enabled: true
+  enabled: false
   additionalLabels: {}
   builtInRules:
     reconcileErrors: true

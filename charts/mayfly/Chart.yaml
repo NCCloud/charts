@@ -1,9 +1,11 @@
 apiVersion: v1
 description: Mayfly Operator
 name: mayfly
-version: 0.0.8
+version: 0.0.1
 sources:
   - https://github.com/NCCloud/mayfly
 maintainers:
   - name: goncalolourenco
     email: goncalo.lourenco@namecheap.com
+  - name: yunussandikci
+    email: yunus.sandikci@namecheap.com
