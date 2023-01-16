@@ -29,4 +29,4 @@ We'd love to have you contribute! Please refer to our [contribution guidelines](
 
 ## 📝 License
 
-[Apache 2.0 License](./LICENSE).
+[Apache 2.0 License](./LICENSE)
