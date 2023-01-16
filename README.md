@@ -1,6 +1,6 @@
 # Namecheap Cloud Helm Charts
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Support](https://img.shields.io/badge/Support-Community-yellow)]
 [![Release](https://github.com/NCCloud/charts/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/NCCloud/charts/actions/workflows/release.yaml)
 This functionality is in beta and is subject to change. The code is provided as-is with no warranties.
