@@ -14,7 +14,7 @@ Contributions are welcome via GitHub pull requests. This document outlines the p
 
 * Must follow [Charts best practices](https://helm.sh/docs/topics/chart_best_practices/)
 * Must pass CI jobs for linting [chart-testing](https://github.com/helm/chart-testing) tool
-* Any change to a chart requires a version bump following [semver](https://semver.org/) principles. See [Immutability(#immutability) and [Versioning](#versioning) below
+* Any change to a chart requires a version bump following [semver](https://semver.org/) principles. See [Versioning](#versioning) below
 
 Once changes have been merged, the release job will automatically run to package and release changed charts.
 
