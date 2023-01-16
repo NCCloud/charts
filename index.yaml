@@ -2,6 +2,21 @@ apiVersion: v1
 entries:
   mayfly:
   - apiVersion: v1
+    created: "2023-01-16T12:51:38.424804546Z"
+    description: Mayfly Operator
+    digest: 1c1703eedaee2e4f4be03989837c4a3251ba28fa01a1a638bc03e6a001b0c9b5
+    maintainers:
+    - email: goncalo.lourenco@namecheap.com
+      name: goncalolourenco
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: mayfly
+    sources:
+    - https://github.com/NCCloud/mayfly
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/mayfly-1.0.0/mayfly-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v1
     created: "2023-01-16T09:13:49.543786092Z"
     description: Mayfly Operator
     digest: 6125fba3c6b2b49d7b98001d4b77012d3a1c2bdb497574b97021c0244ea05f32
@@ -16,4 +31,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/mayfly-0.0.1/mayfly-0.0.1.tgz
     version: 0.0.1
-generated: "2023-01-16T09:13:49.543801949Z"
+generated: "2023-01-16T12:51:38.424818372Z"
