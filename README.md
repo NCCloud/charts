@@ -1,6 +1,6 @@
 # Namecheap Cloud Helm Charts
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Support](https://img.shields.io/badge/Support-Community-yellow)]()
 [![Release](https://github.com/NCCloud/charts/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/NCCloud/charts/actions/workflows/release.yaml)
 
@@ -29,4 +29,4 @@ We'd love to have you contribute! Please refer to our [contribution guidelines](
 
 ## 📝 License
 
-[MIT License](./LICENSE).
+[Apache 2.0 License](./LICENSE).
