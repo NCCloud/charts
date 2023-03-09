@@ -1,0 +1,20 @@
+{{- if .Values.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: watchtower
+    {{- if .Values.serviceMonitor.additionalLabels }}
+{{- toYaml .Values.serviceMonitor.additionalLabels | nindent 4 }}
+    {{- end }}
+  name: watchtower
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpoints:
+    - path: /metrics
+      port: metric
+      scheme: http
+  selector:
+    matchLabels:
+      app: watchtower
+{{- end }}

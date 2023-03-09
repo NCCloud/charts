@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: watchtower
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: watchtower
+spec:
+  ports:
+    - name: metric
+      port: 8083
+      protocol: TCP
+      targetPort: 8083
+  selector:
+    app: watchtower
