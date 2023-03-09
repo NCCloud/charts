@@ -45,4 +45,18 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/mayfly-1.0.0/mayfly-1.0.0.tgz
     version: 1.0.0
-generated: "2023-01-19T09:30:01.644901446Z"
+  watchtower:
+  - apiVersion: v1
+    created: "2023-03-09T15:56:16.804953338Z"
+    description: Watchtower
+    digest: 86e1cc144a21e3bf131adcb6b34dfd621805a5f2f05455d3f1b3f7f167f60e59
+    maintainers:
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: watchtower
+    sources:
+    - https://github.com/NCCloud/watchtower
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-03-09T15:56:16.804962238Z"
