@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watchtower
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: watchtower
+  template:
+    metadata:
+      labels:
+        app: watchtower
+    spec:
+      containers:
+        - name: manager
+          command: ["/app/manager"]
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - name: metric
+              containerPort: 8083
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8084
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8084
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          {{- if .Values.env }}
+          env:
+{{ toYaml .Values.env | indent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: watchtower-config
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+      serviceAccountName: watchtower
+      securityContext:
+        runAsNonRoot: true
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- end }}
+      imagePullSecrets:
+        {{- if .Values.imagePullSecretName }}
+        - name: {{ .Values.imagePullSecretName }}
+        {{- end }}
+        {{- if .Values.dockerconfigjson }}
+        - name: watchtower-pull-secret
+        {{- end }}
+      volumes:
+        - name: watchtower-config
+          secret:
+            secretName: watchtower-config

@@ -1,0 +1,41 @@
+{{- if .Values.prometheusRule.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: watchtower
+    {{- if .Values.prometheusRule.additionalLabels }}
+{{- toYaml .Values.prometheusRule.additionalLabels | nindent 4 }}
+    {{- end }}
+  name: watchtower
+  namespace: {{ .Release.Namespace }}
+spec:
+  groups:
+  - name: watchtower.rules
+    rules:
+    {{- if .Values.prometheusRule.builtInRules.reconcileErrors }}
+    - alert: WatchtowerReconcileErrors
+      expr: rate(controller_runtime_reconcile_errors_total{job="watchtower"}[5m]) > 0.1
+      for: 10m
+      labels:
+        severity: warning-devops
+      annotations:
+        dashboard: watchtower-operator
+        description: 'Errors while reconciling `{{`{{ $labels.controller }}`}}` controller of watchtower in `{{`{{ $labels.namespace }}`}}` Namespace.'
+        summary: Watchtower reconcile is in bad shape.
+    {{- end }}
+    {{- if .Values.prometheusRule.builtInRules.down }}
+    - alert: WatchtowerDown
+      expr: absent(up{job="watchtower"})
+      for: 10m
+      labels:
+        severity: warning-devops
+      annotations:
+        dashboard: watchtower-operator
+        description: Watchtower has disappeared from Prometheus target discovery.
+        summary: Watchtower is down.
+    {{- end }}
+    {{- if .Values.prometheusRule.additionalRules }}
+    {{- toYaml .Values.prometheusRule.additionalRules | nindent 4 }}
+    {{- end }}
+{{- end }}
