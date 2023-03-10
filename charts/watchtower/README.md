@@ -1,6 +1,6 @@
 # watchtower
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)
 
 Watchtower
 
@@ -24,7 +24,7 @@ Watchtower
 | config.taps | list | `[]` |  |
 | dockerconfigjson | string | `""` |  |
 | env | list | `[]` |  |
-| image.repository | string | `"ghcr.io/nccloud/mayfly"` |  |
+| image.repository | string | `"ghcr.io/nccloud/watchtower"` |  |
 | image.tag | string | `"latest"` |  |
 | imagePullSecretName | string | `""` |  |
 | prometheusRule.additionalLabels | object | `{}` |  |
