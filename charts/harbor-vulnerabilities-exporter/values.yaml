@@ -2,9 +2,10 @@
 replicas: 1
 harborApiUrl: 'http://harbor-harbor-harbor-core.harbor/api/v2.0'
 exporterPort: 8000
+# -- number of threads for exporter script to call Harbor API
 threadCount: 5
 
-# script won't use credentials if values are empty
+# -- script won't use credentials if values are empty read-only user should be enough
 harborUsername: ''
 harborPassword: ''
 
