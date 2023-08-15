@@ -16,6 +16,20 @@ entries:
     version: 1.0.0
   harbor-vulnerabilities-exporter:
   - apiVersion: v2
+    created: "2023-08-15T10:48:19.894378101Z"
+    description: A Helm chart for showing vulnerabilities information in images stored
+      in Harbor
+    digest: 63f0326da58d659f01d10eff765c00dbea5c259ee946a034d1748513d0233c6e
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: harbor-vulnerabilities-exporter
+    sources:
+    - https://github.com/NCCloud/harbor-vulnerabilities-exporter
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/harbor-vulnerabilities-exporter-1.0.1/harbor-vulnerabilities-exporter-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2023-08-15T09:32:15.560248877Z"
     description: A Helm chart for showing vulnerabilities information in images stored
       in Harbor
@@ -87,4 +101,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2023-08-15T09:32:15.560279877Z"
+generated: "2023-08-15T10:48:19.894388401Z"
