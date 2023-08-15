@@ -14,6 +14,21 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/csi-hostpath-plugin-1.0.0/csi-hostpath-plugin-1.0.0.tgz
     version: 1.0.0
+  harbor-vulnerabilities-exporter:
+  - apiVersion: v2
+    created: "2023-08-15T09:32:15.560248877Z"
+    description: A Helm chart for showing vulnerabilities information in images stored
+      in Harbor
+    digest: 853df9a1eaa31ddef20e39bdb5a6c75e02a1fccc867462f5c744414db879994d
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: harbor-vulnerabilities-exporter
+    sources:
+    - https://github.com/NCCloud/harbor-vulnerabilities-exporter
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/harbor-vulnerabilities-exporter-1.0.0/harbor-vulnerabilities-exporter-1.0.0.tgz
+    version: 1.0.0
   mayfly:
   - apiVersion: v1
     created: "2023-01-16T18:26:59.509960617Z"
@@ -72,4 +87,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-10T09:46:50.068669552Z"
+generated: "2023-08-15T09:32:15.560279877Z"
