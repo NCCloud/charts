@@ -1,8 +1,18 @@
 # harbor-vulnerabilities-exporter
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
 
 A Helm chart for showing vulnerabilities information in images stored in Harbor
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| vriabyk | <vladyslav.riabik@namecheap.com> |  |
+
+## Source Code
+
+* <https://github.com/NCCloud/harbor-vulnerabilities-exporter>
 
 ## Values
 
@@ -12,7 +22,6 @@ A Helm chart for showing vulnerabilities information in images stored in Harbor
 | harborApiUrl | string | `"http://harbor-harbor-harbor-core.harbor/api/v2.0"` |  |
 | harborPassword | string | `""` |  |
 | harborUsername | string | `""` |  |
-| image.imagePullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/nccloud/harbor-vulnerabilities-exporter"` |  |
 | image.tag | string | `"latest"` |  |
 | replicas | int | `1` |  |
