@@ -37,14 +37,16 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
-          {{- if .Values.env }}
           env:
-{{ toYaml .Values.env | indent 12 }}
+          - name: "ENABLE_LEADER_ELECTION"
+            value: {{ required "A valid .Values.config.enableLeaderElection entry required!" .Values.config.enableLeaderElection | quote }}
+          - name: "SYNC_PERIOD"
+            value: {{ required "A valid .Values.config.syncPeriod entry required!" .Values.config.syncPeriod | quote }}
+          - name: "WATCHER_REFRESH_PERIOD"
+            value: {{ required "A valid .Values.config.watcherRefreshPeriod entry required!" .Values.config.watcherRefreshPeriod | quote }}
+          {{- if .Values.extraEnvs }}
+          {{ toYaml .Values.extraEnvs | indent 8 }}
           {{- end }}
-          volumeMounts:
-            - name: watchtower-config
-              mountPath: /app/config.yaml
-              subPath: config.yaml
       serviceAccountName: watchtower
       securityContext:
         runAsNonRoot: true
@@ -56,14 +58,11 @@ spec:
       affinity:
 {{ toYaml .Values.affinity | indent 8 }}
       {{- end }}
+      {{- if .Values.imagePullSecretName }}
       imagePullSecrets:
-        {{- if .Values.imagePullSecretName }}
         - name: {{ .Values.imagePullSecretName }}
-        {{- end }}
-        {{- if .Values.dockerconfigjson }}
+      {{- end }}
+      {{- if .Values.dockerconfigjson }}
+      imagePullSecrets:
         - name: watchtower-pull-secret
-        {{- end }}
-      volumes:
-        - name: watchtower-config
-          secret:
-            secretName: watchtower-config
+      {{- end }}

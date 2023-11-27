@@ -31,8 +31,9 @@ prometheusRule:
 
 imagePullSecretName: ""
 dockerconfigjson: ""
+extraEnvs: {}
 
 config:
-  taps: []
-  sinks: []
-  flows: []
+  enableLeaderElection: "true"
+  syncPeriod: "36h"
+  watcherRefreshPeriod: "30s"
