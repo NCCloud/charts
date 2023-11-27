@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: watchtower-config
-  namespace: {{ .Release.Namespace }}
-data:
-  config.yaml: {{ .Values.config | toYaml | trimPrefix "|" | trimPrefix "\n" | trimPrefix "2" | b64enc }}
