@@ -32,4 +32,4 @@ spec:
             - name: THREADS
               value: "{{ .Values.threadCount }}"
             - name: IGNORE_REPOSITORIES
-              value: '[{{ .Values.ignoreRepositories }}]'
+              value: '{{ .Values.ignoreRepositories }}'
