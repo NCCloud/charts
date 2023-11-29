@@ -90,6 +90,19 @@ entries:
     version: 1.0.0
   watchtower:
   - apiVersion: v1
+    created: "2023-11-29T09:35:31.237168577Z"
+    description: Watchtower
+    digest: 0a7a29a492d50ce585b991e26427f6075912cf865fccd04172ccd8aaa05f2086
+    maintainers:
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: watchtower
+    sources:
+    - https://github.com/NCCloud/watchtower
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/watchtower-1.1.1/watchtower-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v1
     created: "2023-11-27T17:08:39.063928743Z"
     description: Watchtower
     digest: 7d29a42c0da71fd9a6125ac240c4cd6c2de25f22be4bafa4ee9575839a924fe6
@@ -128,4 +141,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-29T08:26:36.838927214Z"
+generated: "2023-11-29T09:35:31.237200326Z"
