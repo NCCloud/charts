@@ -4,13 +4,11 @@ metadata:
   name: watchtower
 rules:
   - apiGroups: [ "*" ]
+    resources: [ "*" ]
     verbs:
       - get
       - list
       - watch
-      - create
-    resources:
-      - "leases"
-      - "events"
-      - "watchers"
-      - "secrets"
+  - apiGroups: [ "*" ]
+    resources: [ "leases", "events" ]
+    verbs: [ "*" ]

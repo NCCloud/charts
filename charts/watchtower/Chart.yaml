@@ -1,7 +1,7 @@
 apiVersion: v1
 description: Watchtower
 name: watchtower
-version: 1.1.0
+version: 1.1.1
 sources:
   - https://github.com/NCCloud/watchtower
 maintainers:
