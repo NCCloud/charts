@@ -31,3 +31,5 @@ spec:
               value: "{{ .Values.exporterPort }}"
             - name: THREADS
               value: "{{ .Values.threadCount }}"
+            - name: IGNORE_REPOSITORIES
+              value: '{{ .Values.ignoreRepositories }}'

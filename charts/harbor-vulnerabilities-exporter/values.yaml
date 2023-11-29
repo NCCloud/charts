@@ -5,6 +5,9 @@ exporterPort: 8000
 # -- number of threads for exporter script to call Harbor API
 threadCount: 5
 
+# -- comma separated list of project/repositories to ignore (won't create a metric in prometheus), for example: 'project/repo1,project/repo2'
+ignoreRepositories: ''
+
 # -- script won't use credentials if values are empty read-only user should be enough
 harborUsername: ''
 harborPassword: ''
