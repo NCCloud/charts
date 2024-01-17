@@ -1,7 +1,7 @@
 apiVersion: v1
 description: CSI HostPath Plugin
 name: csi-hostpath-plugin
-version: 1.0.0
+version: 1.1.0
 sources:
   - https://github.com/NCCloud/csi-hostpath-plugin
 maintainers:
