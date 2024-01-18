@@ -1,10 +1,10 @@
 images:
   hostPathPlugin: registry.k8s.io/sig-storage/hostpathplugin:v1.12.1
-  snapshotController: registry.k8s.io/sig-storage/snapshot-controller:v6.2.1
+  snapshotController: registry.k8s.io/sig-storage/snapshot-controller:v6.3.1
   externalHealthMonitorController: registry.k8s.io/sig-storage/csi-external-health-monitor-controller:v0.10.0
-  nodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.0
+  nodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.3
   livenessProbe: registry.k8s.io/sig-storage/livenessprobe:v2.11.0
-  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.4.0
-  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v3.6.0
-  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.9.0
-  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.1
+  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.4.3
+  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v3.6.3
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.9.3
+  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.3
