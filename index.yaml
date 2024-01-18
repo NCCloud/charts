@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   csi-hostpath-plugin:
   - apiVersion: v1
+    created: "2024-01-18T14:53:03.365819485Z"
+    description: CSI HostPath Plugin
+    digest: 2fb7a8432bab538cedae6d5e3d2e145cdbb47ce9858a2b0255736a39bebe96e5
+    maintainers:
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: csi-hostpath-plugin
+    sources:
+    - https://github.com/NCCloud/csi-hostpath-plugin
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/csi-hostpath-plugin-1.1.0/csi-hostpath-plugin-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
     created: "2023-01-19T09:30:01.644891646Z"
     description: CSI HostPath Plugin
     digest: d404da3fc2617a31f0e96cd0fa94d5e5ea710eb4c763b711e32b40687c406c07
@@ -156,4 +169,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-15T10:31:46.939236833Z"
+generated: "2024-01-18T14:53:03.365868096Z"
