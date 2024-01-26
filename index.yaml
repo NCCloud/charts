@@ -116,6 +116,20 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/mayfly-1.0.0/mayfly-1.0.0.tgz
     version: 1.0.0
+  tabby-operator:
+  - apiVersion: v2
+    created: "2024-01-26T11:40:23.321401838Z"
+    description: A Helm chart for Kubernetes tabby cni operator
+    digest: 77e6d9f3c8ab6ff43d1d97d4d69e1253036d4043913e319645cfa7a4eb22c008
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: tabby-operator
+    sources:
+    - https://github.com/NCCloud/tabby-cni
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/tabby-operator-0.0.42/tabby-operator-0.0.42.tgz
+    version: 0.0.42
   watchtower:
   - apiVersion: v1
     created: "2023-11-29T09:35:31.237168577Z"
@@ -169,4 +183,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-18T14:53:03.365868096Z"
+generated: "2024-01-26T11:40:23.321443125Z"
