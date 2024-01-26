@@ -5,5 +5,5 @@ version: 0.0.42
 sources:
   - https://github.com/NCCloud/tabby-cni
 maintainers:
-  - name: infra-cloud-team
-    email: infra-cloud-team@namecheap.com
+  - name: vriabyk
+    email: vladyslav.riabik@namecheap.com
