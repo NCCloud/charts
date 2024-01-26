@@ -6,9 +6,9 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/nccloud/tabby-operator
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # default pullPolicy is IfNotPresent
+  #pullPolicy: ""
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""

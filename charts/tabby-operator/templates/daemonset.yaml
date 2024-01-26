@@ -44,7 +44,7 @@ spec:
           command:
           - /manager
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           livenessProbe:
             failureThreshold: 3
             httpGet:
