@@ -1,0 +1,9 @@
+apiVersion: v2
+name: tabby-operator
+description: A Helm chart for Kubernetes tabby cni operator
+version: 0.0.42
+sources:
+  - https://github.com/NCCloud/tabby-cni
+maintainers:
+  - name: vriabyk
+    email: vladyslav.riabik@namecheap.com
