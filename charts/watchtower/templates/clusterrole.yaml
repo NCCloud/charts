@@ -5,10 +5,4 @@ metadata:
 rules:
   - apiGroups: [ "*" ]
     resources: [ "*" ]
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups: [ "*" ]
-    resources: [ "leases", "events" ]
     verbs: [ "*" ]
