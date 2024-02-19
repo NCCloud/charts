@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: watchers.cloud.spaceship.com
 spec:
   group: cloud.spaceship.com
@@ -19,14 +19,19 @@ spec:
       openAPIV3Schema:
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -66,19 +71,25 @@ spec:
                         description: Create allows you to set create event based filters
                         properties:
                           creationTimeout:
-                            description: CreationTimeout sets what will be the maximum
-                              duration can past for the objects in create queue. It
-                              also helps to minimize number of object that will be
-                              re-sent when application restarts.
+                            description: |-
+                              CreationTimeout sets what will be the maximum duration can past for the objects in create queue.
+                              It also helps to minimize number of object that will be re-sent when application restarts.
                             type: string
                         type: object
                       update:
                         description: Update allows you to set update event based filters
                         properties:
                           generationChanged:
-                            description: GenerationChanged sets if generation should
-                              be different or same according to value. By default,
-                              It's not in use.
+                            description: |-
+                              GenerationChanged sets if generation should be different or same according to value.
+                              It's useful when you want/don't want to send objects when their sub-resources are updated, like status updates.
+                              By default, It's not set.
+                            type: boolean
+                          resourceVersionChanged:
+                            description: |-
+                              ResourceVersionChanged sets if resource version should be different or same according to value.
+                              It's useful when you don't want to re-send objects if their resource version is not changed,
+                              like it will happen on full re-synchronization. By default, It's not set.
                             type: boolean
                         type: object
                     type: object
@@ -134,6 +145,19 @@ spec:
                     description: Kind is the kind of the object like Deployment, Secret,
                       MyCustomResource etc.
                     type: string
+                  options:
+                    description: Options allows you to set source specific options
+                    properties:
+                      onSuccess:
+                        description: OnSuccess options will be used when the source
+                          is successfully processed.
+                        properties:
+                          deleteObject:
+                            description: DeleteObject will delete the object after
+                              it successfully processed.
+                            type: boolean
+                        type: object
+                    type: object
                 type: object
               valuesFrom:
                 description: ValuesFrom allows merging variables from references.
