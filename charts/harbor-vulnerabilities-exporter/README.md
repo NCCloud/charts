@@ -1,6 +1,6 @@
 # harbor-vulnerabilities-exporter
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
 
 A Helm chart for showing vulnerabilities information in images stored in Harbor
 
@@ -22,7 +22,6 @@ A Helm chart for showing vulnerabilities information in images stored in Harbor
 | harborApiUrl | string | `"http://harbor-harbor-harbor-core.harbor/api/v2.0"` |  |
 | harborPassword | string | `""` |  |
 | harborUsername | string | `""` | script won't use credentials if values are empty read-only user should be enough |
-| ignoreRepositories | string | `""` | comma separated list of project/repositories to ignore (won't create a metric in prometheus), for example: 'project/repo1,project/repo2' |
 | image.repository | string | `"ghcr.io/nccloud/harbor-vulnerabilities-exporter"` |  |
 | image.tag | string | `"latest"` |  |
 | replicas | int | `1` |  |
