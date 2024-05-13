@@ -6,9 +6,9 @@ exporterPort: 8000
 threadCount: 5
 
 # -- list of project/repositories to ignore (won't create a metric in prometheus)
-#ignoreRepositories:
-#- project/repo1
-#- project/repo2
+# ignoreRepositories:
+# - project/repo1
+# - project/repo2
 
 # -- script won't use credentials if values are empty read-only user should be enough
 harborUsername: ''
