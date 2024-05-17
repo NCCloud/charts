@@ -43,6 +43,9 @@ spec:
           - -health-probe-bind-address=:8002
           command:
           - /manager
+          env:
+          - name: WATCH_KUBEVIRT_MIGRATION
+            value: {{ default "false" .Values.operatorConfig.watchKubevirtMigration | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           livenessProbe:

@@ -63,3 +63,8 @@ affinity:
           operator: In
           values:
           - linux
+
+operatorConfig:
+  # -- whether to enable the controller that watches the completion of KubeVirt VM migrations and sends a GARP request.
+  # This also dynamically configures required RBAC permissions
+  watchKubevirtMigration: false
