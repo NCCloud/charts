@@ -11,6 +11,14 @@ metadata:
   {{- end }}
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - cloud.spaceship.com
   resources:
   - networkattachments
@@ -63,9 +71,9 @@ rules:
   - patch
   - update
 - apiGroups:
-  - ""
+  - kubevirt.io
   resources:
-  - nodes
+  - virtualmachineinstances
   verbs:
   - get
   - list
