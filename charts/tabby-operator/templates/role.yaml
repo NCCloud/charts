@@ -70,6 +70,7 @@ rules:
   - get
   - patch
   - update
+{{- if .Values.operatorConfig.watchKubevirtMigration }}
 - apiGroups:
   - kubevirt.io
   resources:
@@ -78,4 +79,5 @@ rules:
   - get
   - list
   - watch
+{{- end }}
 {{- end }}
