@@ -1,6 +1,6 @@
 # tabby-operator
 
-![Version: 0.0.42](https://img.shields.io/badge/Version-0.0.42-informational?style=flat-square)
+![Version: 0.0.43](https://img.shields.io/badge/Version-0.0.43-informational?style=flat-square)
 
 A Helm chart for Kubernetes tabby cni operator
 
@@ -27,6 +27,7 @@ A Helm chart for Kubernetes tabby cni operator
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| operatorConfig.watchKubevirtMigration | bool | `false` | whether to enable the controller that watches the completion of KubeVirt VM migrations and sends a GARP request. This also dynamically configures required RBAC permissions |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
