@@ -146,6 +146,19 @@ entries:
     version: 1.0.0
   tabby-operator:
   - apiVersion: v2
+    created: "2024-05-17T12:09:28.395170319Z"
+    description: A Helm chart for Kubernetes tabby cni operator
+    digest: 8b6c57a18c61cd257a72721df6113250042e855cdcbe98cb7d2e768f5e87230e
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: tabby-operator
+    sources:
+    - https://github.com/NCCloud/tabby-cni
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/tabby-operator-0.0.43/tabby-operator-0.0.43.tgz
+    version: 0.0.43
+  - apiVersion: v2
     created: "2024-01-26T11:40:23.321401838Z"
     description: A Helm chart for Kubernetes tabby cni operator
     digest: 77e6d9f3c8ab6ff43d1d97d4d69e1253036d4043913e319645cfa7a4eb22c008
@@ -224,4 +237,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-05-14T07:43:35.539932503Z"
+generated: "2024-05-17T12:09:28.39520269Z"
