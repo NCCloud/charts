@@ -1,6 +1,6 @@
 # mayfly
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+![Version: 1.1.0-rc.1](https://img.shields.io/badge/Version-1.1.0--rc.1-informational?style=flat-square)
 
 Mayfly Operator
 
