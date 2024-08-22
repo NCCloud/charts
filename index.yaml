@@ -100,6 +100,21 @@ entries:
     version: 1.0.0
   mayfly:
   - apiVersion: v1
+    created: "2024-08-22T09:12:37.799416491Z"
+    description: Mayfly Operator
+    digest: ed9a3c3044a1d3d7edffc481621afb00ebf2b9144aeb460ade03a092c3956af7
+    maintainers:
+    - email: goncalo.lourenco@namecheap.com
+      name: goncalolourenco
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: mayfly
+    sources:
+    - https://github.com/NCCloud/mayfly
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/mayfly-1.1.0/mayfly-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
     created: "2024-08-19T06:25:24.84846795Z"
     description: Mayfly Operator
     digest: e667b81584c4a81cb5e55a698eab87f1422feee6a3cc2eee2e6cf8d879dde6b1
@@ -267,4 +282,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-19T06:25:24.848539705Z"
+generated: "2024-08-22T09:12:37.799482836Z"
