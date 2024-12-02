@@ -1,0 +1,102 @@
+# Default values for metadata-reflector.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- The number of controller replicas to run. Leader election is enabled for 2 and more replicas
+replicaCount: 1
+
+image:
+  repository: ghcr.io/nccloud/metadata-reflector
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: "metadata-reflector"
+annotations: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  name: "metadata-reflector"
+
+securityContext:
+  runAsNonRoot: true
+
+service:
+  type: ClusterIP
+
+livenessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /healthz
+    port: 8083
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /readyz
+    port: 8083
+    scheme: HTTP
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+metrics:
+  # -- The port to expose Prometheus metrics on
+  port: 9090
+  # -- Service Monitor configuration. Enable if Prometheus is installed in your cluster
+  serviceMonitor:
+    path: "/metrics"
+    enabled: false
+    annotations: {}
+    scrapeInterval: 1m
+    scrapeTimeout: 10s
+
+configuration:
+  # -- The frequency of the background reconciliation. Set to 0 to disable
+  backgroundReflectionInterval: 5m
+  # -- Configure what resources will be watched by the controller. An example can be seen in `values.yaml`.
+  # At the moment, only Deployment is supported
+  resourceSelector: {}
+  # - kind: Deployment
+  #   matchExpressions:
+  #   - key: app
+  #     operator: In
+  #     values: ["hello", "world"]
+  # -- A list of namespaces to watch
+  namespaces: []
+
+  # -- The value for GOMAXPROCS. By default, the CPU limit of the deployment.
+  # See https://pkg.go.dev/runtime#hdr-Environment_Variables
+  gomaxprocsOverride: ""
+  # -- The value for GOMEMLIMIT. By default, the memory limit of the deployment.
+  # See https://pkg.go.dev/runtime#hdr-Environment_Variables
+  gomemlimitOverride: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# -- Extra environment variables to be passed to the controller deployment
+extraEnvs: []
