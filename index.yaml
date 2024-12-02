@@ -189,6 +189,21 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/mayfly-1.0.0/mayfly-1.0.0.tgz
     version: 1.0.0
+  metadata-reflector:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2024-12-02T10:21:42.755710629Z"
+    description: Metadata Reflector
+    digest: 2905e7e9594a76f7f12c50bf8a799af875267a997570ea7713c00c8f3c3448b4
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: metadata-reflector
+    sources:
+    - https://github.com/NCCloud/metadata-reflector
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/metadata-reflector-0.1.0/metadata-reflector-0.1.0.tgz
+    version: 0.1.0
   tabby-operator:
   - apiVersion: v2
     created: "2024-05-17T12:09:28.395170319Z"
@@ -282,4 +297,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-22T09:12:37.799482836Z"
+generated: "2024-12-02T10:21:42.755761023Z"
