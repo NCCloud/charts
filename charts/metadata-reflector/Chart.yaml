@@ -1,0 +1,10 @@
+apiVersion: v1
+description: Metadata Reflector
+name: metadata-reflector
+version: 0.1.0
+appVersion: 0.1.0
+sources:
+  - https://github.com/NCCloud/metadata-reflector
+maintainers:
+  - name: olegneychev
+    email: oleg.neychev@namecheap.com

@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "metadata-reflector.fullname" . }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "metadata-reflector.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "metadata-reflector.labels" . | nindent 6 }}
+  {{ if .Values.updateStrategy -}}
+  strategy:
+    {{- toYaml .Values.updateStrategy | nindent 4 }}
+  {{ end -}}
+  template:
+    metadata:
+      labels:
+        {{- include "metadata-reflector.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "metadata-reflector.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      containers:
+        - name: metadata-reflector
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+          - name: BACKGROUND_REFLECTION_INTERVAL
+            value: "{{ .Values.configuration.backgroundReflectionInterval }}"
+          - name: PROMETHEUS_METRICS_PORT
+            value: "{{ .Values.metrics.port }}"
+          - name: NAMESPACES
+            value: "{{ join "," .Values.configuration.namespaces }}"
+          {{- if gt .Values.replicaCount 1.0 }}
+          - name: ENABLE_LEADER_ELECTION
+            value: "true"
+          {{- end }}
+          - name: GOMAXPROCS
+          {{- if .Values.configuration.gomaxprocsOverride }}
+            value: {{ .Values.configuration.gomaxprocsOverride | quote }}
+          {{- else }}
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.cpu
+                divisor: '1'
+          {{- end }}
+          - name: GOMEMLIMIT
+          {{- if .Values.configuration.gomemlimitOverride }}
+            value: {{ .Values.configuration.gomemlimitOverride | quote }}
+          {{- else }}
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+                divisor: '1'
+          {{- end }}
+          {{- include "resourceSelectorEnvVariables" . | trim | nindent 10 }}
+          {{- if .Values.extraEnvs }}
+          {{- toYaml .Values.extraEnvs | nindent 10 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
