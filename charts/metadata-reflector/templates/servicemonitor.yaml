@@ -15,7 +15,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-    {{- include "metadata-reflector.labels" . | nindent 6 }}
+    {{- include "metadata-reflector.selectorLabels" . | nindent 6 }}
   endpoints:
   - port: "metrics"
     path: {{ .Values.metrics.serviceMonitor.path }}
