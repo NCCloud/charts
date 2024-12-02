@@ -6,5 +6,5 @@ appVersion: 0.1.0
 sources:
   - https://github.com/NCCloud/metadata-reflector
 maintainers:
-  - name: olegneychev
+  - name: BonySmoke
     email: oleg.neychev@namecheap.com
