@@ -8,7 +8,7 @@ Metadata Reflector
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| olegneychev | <oleg.neychev@namecheap.com> |  |
+| BonySmoke | <oleg.neychev@namecheap.com> |  |
 
 ## Source Code
 
