@@ -191,6 +191,20 @@ entries:
     version: 1.0.0
   metadata-reflector:
   - apiVersion: v1
+    appVersion: 0.2.0
+    created: "2024-12-18T14:48:57.203820417Z"
+    description: Metadata Reflector
+    digest: c72e376856dd7db89079d523cbcb2c999ea986e303300ad072c43233949a1b89
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: metadata-reflector
+    sources:
+    - https://github.com/NCCloud/metadata-reflector
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/metadata-reflector-0.1.1/metadata-reflector-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
     appVersion: 0.1.0
     created: "2024-12-02T10:21:42.755710629Z"
     description: Metadata Reflector
@@ -297,4 +311,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2024-12-02T10:21:42.755761023Z"
+generated: "2024-12-18T14:48:57.203872504Z"
