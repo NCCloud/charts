@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.1
   name: watchers.cloud.spaceship.com
 spec:
   group: cloud.spaceship.com
@@ -44,14 +44,10 @@ spec:
                     description: BodyTemplate is the template field to set what will
                       be sent the destination.
                     type: string
-                  headers:
-                    additionalProperties:
-                      items:
-                        type: string
-                      type: array
-                    description: Method is the HTTP headers will be used while calling
-                      the destination endpoints.
-                    type: object
+                  headerTemplate:
+                    description: HeaderTemplate is the template field to set what
+                      will be sent the destination.
+                    type: string
                   method:
                     description: Method is the HTTP method will be used while calling
                       the destination endpoints.
