@@ -1,6 +1,6 @@
 # metadata-reflector
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: 0.2.1](https://img.shields.io/badge/AppVersion-0.2.1-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![AppVersion: 0.3.0](https://img.shields.io/badge/AppVersion-0.3.0-informational?style=flat-square)
 
 Metadata Reflector
 
@@ -23,6 +23,7 @@ Metadata Reflector
 | configuration.backgroundReflectionInterval | string | `"5m"` | The frequency of the background reconciliation. Set to 0 to disable |
 | configuration.gomaxprocsOverride | string | `""` | The value for GOMAXPROCS. By default, the CPU limit of the deployment. See https://pkg.go.dev/runtime#hdr-Environment_Variables |
 | configuration.gomemlimitOverride | string | `""` | The value for GOMEMLIMIT. By default, the memory limit of the deployment. See https://pkg.go.dev/runtime#hdr-Environment_Variables |
+| configuration.maxConcurrentReconciles | int | `1` |  |
 | configuration.namespaces | list | `[]` | A list of namespaces to watch |
 | configuration.resourceSelector | object | `{}` | Configure what resources will be watched by the controller. An example can be seen in `values.yaml`. At the moment, only Deployment is supported |
 | extraEnvs | list | `[]` | Extra environment variables to be passed to the controller deployment |
