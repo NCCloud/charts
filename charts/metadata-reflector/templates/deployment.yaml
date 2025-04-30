@@ -52,7 +52,9 @@ spec:
             value: "{{ .Values.metrics.port }}"
           - name: NAMESPACES
             value: "{{ join "," .Values.configuration.namespaces }}"
-          {{- if gt .Values.replicaCount 1.0 }}
+          - name: MAX_CONCURRENT_RECONCILES
+            value: "{{ .Values.configuration.maxConcurrentReconciles }}"
+          {{- if gt (int .Values.replicaCount) 1 }}
           - name: ENABLE_LEADER_ELECTION
             value: "true"
           {{- end }}
