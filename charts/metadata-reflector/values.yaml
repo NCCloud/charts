@@ -84,6 +84,7 @@ configuration:
   #     values: ["hello", "world"]
   # -- A list of namespaces to watch
   namespaces: []
+  maxConcurrentReconciles: 1
 
   # -- The value for GOMAXPROCS. By default, the CPU limit of the deployment.
   # See https://pkg.go.dev/runtime#hdr-Environment_Variables

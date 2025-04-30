@@ -15,6 +15,11 @@ rules:
       - watch
       - patch
       - update
+  - apiGroups: [""]
+    resources:
+      - events
+    verbs:
+      - create
   - apiGroups:
       - apps
     resources:
