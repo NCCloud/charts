@@ -26,10 +26,19 @@ spec:
     {{- end }}
     {{- if .Values.prometheusRule.builtInRules.down }}
     - alert: WatchtowerDown
-      expr: absent(up{job="watchtower"})
+      expr: count by(cluster, job, service) (up{job="watchtower"} == 0) / count by(cluster, job, service) (up{job="watchtower"}) or absent(up{job="watchtower"})
       for: 10m
       labels:
         severity: warning-devops
+      annotations:
+        dashboard: watchtower-operator
+        description: Watchtower has disappeared from Prometheus target discovery.
+        summary: Watchtower is down.
+    - alert: WatchtowerDown
+      expr: count by(cluster, job, service) (up{job="watchtower"} == 0) / count by(cluster, job, service) (up{job="watchtower"}) or absent(up{job="watchtower"})
+      for: 30m
+      labels:
+        severity: critical-devops
       annotations:
         dashboard: watchtower-operator
         description: Watchtower has disappeared from Prometheus target discovery.
