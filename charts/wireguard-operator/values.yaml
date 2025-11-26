@@ -1,0 +1,71 @@
+image:
+  repository: ghcr.io/nccloud/wireguard-operator/manager
+  pullPolicy: IfNotPresent
+
+agentImage:
+  repository: ghcr.io/nccloud/wireguard-operator/agent
+
+replicaCount: 1
+
+imagePullSecrets: []
+
+nameOverride: ""
+
+fullnameOverride: ""
+
+logLevel: "info"
+
+rbac:
+  create: true
+
+annotations: {}
+
+podSecurityContext:
+  fsGroup: 65534
+  runAsNonRoot: true
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsGroup: 65534
+  runAsNonRoot: false
+  runAsUser: 65534
+
+serviceAccount:
+  create: true
+  name: ""
+  automountServiceAccountToken: true
+
+service:
+  create: true
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+extraArgs: {}
+
+env: []
+
+serviceMonitor:
+  enabled: false
+  interval: ""
+  scrapeTimeout: ""
+  relabelings: []
+  prometheus:
+    # -- specify correct Prometheus ServiceAccount that we add to CRB for scraping /metrics for the operator
+    serviceAccountName: prometheus-k8s
+    namespace: monitoring

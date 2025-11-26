@@ -1,0 +1,10 @@
+apiVersion: v2
+name: wireguard-operator
+description: Wireguard kubernetes operator
+type: application
+version: 0.1.0
+appVersion: "v2.8.0"
+keywords:
+  - wireguard
+  - operator
+  - kubernetes
