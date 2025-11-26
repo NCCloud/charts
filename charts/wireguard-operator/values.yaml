@@ -1,9 +1,11 @@
 image:
   repository: ghcr.io/nccloud/wireguard-operator/manager
+  tag: ""
   pullPolicy: IfNotPresent
 
 agentImage:
   repository: ghcr.io/nccloud/wireguard-operator/agent
+  tag: ""
 
 replicaCount: 1
 
