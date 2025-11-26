@@ -365,4 +365,24 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/watchtower-1.0.0/watchtower-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-17T09:01:15.597725801Z"
+  wireguard-operator:
+  - apiVersion: v2
+    appVersion: v2.8.0
+    created: "2025-11-26T15:44:55.318813473Z"
+    description: Wireguard kubernetes operator
+    digest: d0cecf7e71e8af1c435bca33fe863f9f842d68c92fe3b16501750df801bab374
+    keywords:
+    - wireguard
+    - operator
+    - kubernetes
+    maintainers:
+    - email: nemanja.zeljkovic@namecheap.com
+      name: nocturo
+    name: wireguard-operator
+    sources:
+    - https://github.com/nccloud/wireguard-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/wireguard-operator-0.1.0/wireguard-operator-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-11-26T15:44:55.318884195Z"
