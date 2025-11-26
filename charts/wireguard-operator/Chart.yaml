@@ -8,3 +8,8 @@ keywords:
   - wireguard
   - operator
   - kubernetes
+sources:
+  - https://github.com/nccloud/wireguard-operator
+maintainers:
+  - name: nocturo
+    email: nemanja.zeljkovic@namecheap.com
