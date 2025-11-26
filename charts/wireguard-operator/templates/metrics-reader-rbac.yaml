@@ -1,0 +1,33 @@
+{{ if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "wireguard-operator.fullname" . }}-metrics-reader
+  labels:
+  {{- include "wireguard-operator.labels" . | nindent 4 }}
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "wireguard-operator.fullname" . }}-metrics-reader
+  labels:
+  {{- include "wireguard-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "wireguard-operator.fullname" . }}-metrics-reader
+subjects:
+- kind: ServiceAccount
+  name: {{ include "wireguard-operator.serviceAccountName" . }}-metrics-reader
+  namespace: {{ .Release.Namespace }}
+{{- if .Values.serviceMonitor.enabled }}
+- kind: ServiceAccount
+  name: {{ .Values.serviceMonitor.prometheus.serviceAccountName }}
+  namespace: {{ .Values.serviceMonitor.prometheus.namespace }}
+{{- end }}
+{{- end }}
