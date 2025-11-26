@@ -58,7 +58,10 @@ tolerations: []
 
 affinity: {}
 
-extraArgs: {}
+# -- pass extra arguments to the controller container. One list argument per line
+# extraArgs:
+#   - --agent-image-pull-policy=Always
+extraArgs: []
 
 env: []
 
