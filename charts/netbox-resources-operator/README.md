@@ -1,0 +1,53 @@
+# netbox-resources-operator
+
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+
+A Helm chart for deploying the NetBox Resources Operator
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| BonySmoke | <oleg.neychev@namecheap.com> |  |
+
+## Source Code
+
+* <https://github.com/NCCloud/netbox-resources-operator>
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` |  |
+| extraEnvs | object | `{}` |  |
+| fullnameOverride | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"ghcr.io/nccloud/netbox-resources-operator"` |  |
+| image.tag | string | `""` |  |
+| imagePullSecrets | list | `[]` |  |
+| metrics.port | int | `9090` | The port to expose Prometheus metrics on |
+| metrics.serviceMonitor | object | `{"annotations":{},"enabled":false,"path":"/metrics","scrapeInterval":"1m","scrapeTimeout":"10s"}` | Service Monitor configuration. Enable if Prometheus is installed in your cluster |
+| nameOverride | string | `""` |  |
+| nodeSelector | object | `{}` |  |
+| operatorConfig.netboxTokenSecretName | string | `""` | The name of the secret with a key `token` for read-write NetBox access |
+| operatorConfig.netboxUrl | string | `""` | The NetBox host |
+| operatorConfig.operatorBackoffSeconds | int | `5` | The number of seconds to wait between handler retries in case of an error |
+| operatorConfig.operatorRetryLimit | int | `30` | The number of times a handler can be retried in case of an error |
+| operatorConfig.operatorTimerIdleSeconds | int | `10` | The number of seconds the object has to be idle for the timer to fire |
+| operatorConfig.operatorTimerIntervalSeconds | int | `600` | The number of seconds between timer runs |
+| operatorConfig.operatorWorkerLimit | int | `10` | How many workers can be running simultaneously on per-object event queue |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
+| podSecurityContext | object | `{}` |  |
+| replicaCount | int | `1` |  |
+| resources | object | `{}` |  |
+| securityContext | object | `{}` |  |
+| service.port | int | `8080` |  |
+| service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automount | bool | `true` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| tolerations | list | `[]` |  |
+| volumeMounts | list | `[]` |  |
+| volumes | list | `[]` |  |
