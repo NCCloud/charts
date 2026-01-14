@@ -1,0 +1,17 @@
+{{ if .Values.serviceAccount.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "netbox-resources-operator.serviceAccountName" . }}
+  labels:
+    {{- include "netbox-resources-operator.labels" . | nindent 4 }}
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+{{ end }}

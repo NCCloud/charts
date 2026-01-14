@@ -1,0 +1,201 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: netboxobjects.spaceship.com
+spec:
+  scope: Cluster
+  group: spaceship.com
+  names:
+    kind: NetBoxObject
+    plural: netboxobjects
+    singular: netboxobject
+    shortNames:
+    - nbo
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              dataModel:
+                type: string
+                enum:
+                - circuits
+                - core
+                - dcim
+                - extras
+                - ipam
+                - tenancy
+                - users
+                - virtualization
+                - vpn
+                - wireless
+                description: 'NetBox data model type. Available choices: [''circuits'',
+                  ''core'', ''dcim'', ''extras'', ''ipam'', ''tenancy'', ''users'',
+                  ''virtualization'', ''vpn'', ''wireless'']'
+              endpoint:
+                type: string
+                description: NetBox endpoint for the data model according to API,
+                  e.g., in URL /api/ipam/vlans, vlans is the endpoint
+              body:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      description: The dot-separated path to the field in the NetBox
+                        object to manage, e.g., group.id
+                    value:
+                      description: The raw value to put into path
+                      x-kubernetes-preserve-unknown-fields: true
+                      default: null
+                    valueFrom:
+                      type: object
+                      properties:
+                        secretKeyRef:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: The key in the object data
+                            name:
+                              type: string
+                              description: The name of the object
+                          required:
+                          - key
+                          - name
+                          description: Selects a key of a Secret in the pod's namespace
+                        configMapKeyRef:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: The key in the object data
+                            name:
+                              type: string
+                              description: The name of the object
+                          required:
+                          - key
+                          - name
+                          description: Selects a key of a ConfigMap in the pod's namespace
+                        netboxObjRef:
+                          type: object
+                          properties:
+                            dataModel:
+                              type: string
+                              enum:
+                              - circuits
+                              - core
+                              - dcim
+                              - extras
+                              - ipam
+                              - tenancy
+                              - users
+                              - virtualization
+                              - vpn
+                              - wireless
+                              description: 'NetBox data model type. Available choices:
+                                [''circuits'', ''core'', ''dcim'', ''extras'', ''ipam'',
+                                ''tenancy'', ''users'', ''virtualization'', ''vpn'',
+                                ''wireless'']'
+                            endpoint:
+                              type: string
+                              description: NetBox endpoint for the data model according
+                                to API, e.g., in URL /api/ipam/vlans, vlans is the
+                                endpoint
+                            filter:
+                              type: string
+                              description: 'NetBox comma-separated resource filter:
+                                https://netboxlabs.com/docs/netbox/reference/filtering/'
+                            path:
+                              type: string
+                              description: The dot-separated path to the field in
+                                the retrieved object, e.g., group.id
+                          required:
+                          - dataModel
+                          - endpoint
+                          - filter
+                          - path
+                          description: Resolves a value for the path from NetBox
+                          x-kubernetes-preserve-unknown-fields: true
+                      description: Get a value from a Secret or ConfigMap
+                    lookupKey:
+                      type: boolean
+                      description: Whether to use this field to find existing objects
+                        in NetBox
+                      default: false
+                    lookupAlias:
+                      type: string
+                      description: The alias specifies the name to use for lookup
+                        because NetBox may have different keys for creating and getting
+                        objects, e.g. tags for creation and tag for filtering
+                      default: ''
+                  required:
+                  - path
+              allowExisting:
+                type: boolean
+                description: Whether to allow the management of existing NetBox resources
+                  during creation
+                default: false
+              preserveOnDelete:
+                type: boolean
+                description: Whether not to delete the resource from NetBox upon manifest
+                  deletion
+                default: false
+              allocateAvailable:
+                type: boolean
+                description: 'Whether to allocate the next available item for the
+                  given endpoint.
+
+                  This setting only works with the following endpoints: vlans, vlan-groups,
+                  prefixes, ip-ranges.
+
+                  If ''prefixes'' is used as endpoint, prefix_length must be provided
+                  to create a new prefix. Otherwise, the next available IP will be
+                  created.
+
+                  For every endpoint other than ''vlans'', you must provide the ''id''
+                  path to the parent object
+
+                  While NetBox doesn''t natively support allocating new VLANs for
+                  the ''vlans'' endpoint, the operator will provision the next available
+                  VLAN globally, i.e. an available VLAN within the range of 1-4096
+                  that doesn''t exist either in a group or outside of it'
+                default: false
+            required:
+            - dataModel
+            - endpoint
+            - body
+          status:
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+            default: null
+        required:
+        - spec
+    subresources:
+      status: {}
+    additionalPrinterColumns:
+    - name: Data Model
+      type: string
+      jsonPath: .status.netboxobject.dataModel
+    - name: Endpoint
+      type: string
+      jsonPath: .status.netboxobject.endpoint
+    - name: Resource ID
+      type: integer
+      description: The NetBox resource ID
+      jsonPath: .status.netboxobject.id
+    - name: Resource URL
+      type: string
+      description: The URL to the created NetBox resource
+      jsonPath: .status.netboxobject.url
+    - name: Phase
+      type: string
+      description: The phase of the resource deployment
+      jsonPath: .status.phase

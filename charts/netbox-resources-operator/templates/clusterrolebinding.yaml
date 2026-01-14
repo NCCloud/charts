@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "netbox-resources-operator.serviceAccountName" . }}
+  labels:
+    {{ include "netbox-resources-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "netbox-resources-operator.serviceAccountName" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "netbox-resources-operator.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}

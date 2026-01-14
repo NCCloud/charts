@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "netbox-resources-operator.fullname" . }}
+  labels:
+    {{- include "netbox-resources-operator.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "netbox-resources-operator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "netbox-resources-operator.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "netbox-resources-operator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["kopf", "run", "--liveness=http://0.0.0.0:{{ .Values.service.port }}/healthz", "main.py", "--verbose", "-A"]
+          env:
+            - name: NETBOX_URL
+              value: {{ required ".Values.operatorConfig.netboxUrl must be set" .Values.operatorConfig.netboxUrl }}
+            - name: NETBOX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required ".Values.netboxTokenSecretName must be set" .Values.operatorConfig.netboxTokenSecretName }}
+                  key: token
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: PROMETHEUS_METRICS_PORT
+              value: "{{ .Values.metrics.port }}"
+          {{- if .Values.operatorConfig.operatorWorkerLimit }}
+            - name: OPERATOR_WORKER_LIMIT
+              value: {{ .Values.operatorConfig.operatorWorkerLimit | quote }}
+          {{- end }}
+          {{- if .Values.operatorConfig.operatorRetryLimit }}
+            - name: OPERATOR_RETRY_LIMIT
+              value: {{ .Values.operatorConfig.operatorRetryLimit | quote }}
+          {{- end }}
+          {{- if .Values.operatorConfig.operatorBackoffSeconds }}
+            - name: OPERATOR_BACKOFF_SECONDS
+              value: {{ .Values.operatorConfig.operatorBackoffSeconds | quote }}
+          {{- end }}
+          {{- if .Values.operatorConfig.operatorTimerIdleSeconds }}
+            - name: OPERATOR_TIMER_IDLE_SECONDS
+              value: {{ .Values.operatorConfig.operatorTimerIdleSeconds | quote }}
+          {{- end }}
+          {{- if .Values.operatorConfig.operatorTimerIntervalSeconds }}
+            - name: OPERATOR_TIMER_INTERVAL_SECONDS
+              value: {{ .Values.operatorConfig.operatorTimerIntervalSeconds | quote }}
+          {{- end }}
+          {{- if .Values.extraEnvs }}
+          {{- toYaml .Values.extraEnvs | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
