@@ -246,6 +246,22 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/metadata-reflector-0.1.0/metadata-reflector-0.1.0.tgz
     version: 0.1.0
+  netbox-resources-operator:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-14T10:54:26.655455713Z"
+    description: A Helm chart for deploying the NetBox Resources Operator
+    digest: a8c0d2169faec843d9bca226630d55b40e834381b8ce84822e92d4707e7e9dd8
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: netbox-resources-operator
+    sources:
+    - https://github.com/NCCloud/netbox-resources-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/netbox-resources-operator-0.1.0/netbox-resources-operator-0.1.0.tgz
+    version: 0.1.0
   tabby-operator:
   - apiVersion: v2
     created: "2024-05-17T12:09:28.395170319Z"
@@ -404,4 +420,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/wireguard-operator-0.1.0/wireguard-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-11-26T15:59:09.10509727Z"
+generated: "2026-01-14T10:54:26.655510235Z"
