@@ -100,6 +100,21 @@ entries:
     version: 1.0.0
   mayfly:
   - apiVersion: v1
+    created: "2026-01-15T09:43:13.061555881Z"
+    description: Mayfly Operator
+    digest: efb12d7f4e584b6d344329e3839bdbe16f1e4bedb49311e26dc26996f8a9cc36
+    maintainers:
+    - email: goncalo.lourenco@namecheap.com
+      name: goncalolourenco
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: mayfly
+    sources:
+    - https://github.com/NCCloud/mayfly
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/mayfly-1.2.0/mayfly-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v1
     created: "2024-08-22T09:12:37.799416491Z"
     description: Mayfly Operator
     digest: ed9a3c3044a1d3d7edffc481621afb00ebf2b9144aeb460ade03a092c3956af7
@@ -420,4 +435,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/wireguard-operator-0.1.0/wireguard-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-14T10:54:26.655510235Z"
+generated: "2026-01-15T09:43:13.061637524Z"
