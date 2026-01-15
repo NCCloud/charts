@@ -3,13 +3,6 @@ kind: ClusterRole
 metadata:
   name: mayfly
 rules:
-  - apiGroups: [ "*" ]
-    resources: [ "*" ]
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
+{{- if .Values.clusterRole.rules }}
+  {{- toYaml .Values.clusterRole.rules | nindent 2 }}
+{{- end }}
