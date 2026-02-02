@@ -4,8 +4,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "zap-operator.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "zap-operator.labels" . | nindent 4 }}
   {{- with .Values.metrics.serviceMonitor.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -16,8 +15,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- include "zap-operator.selectorLabels" . | nindent 6 }}
   endpoints:
   - port: "metrics"
     path: {{ .Values.metrics.serviceMonitor.path }}

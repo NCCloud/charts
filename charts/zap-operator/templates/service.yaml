@@ -3,8 +3,7 @@ kind: Service
 metadata:
   name: {{ include "zap-operator.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "zap-operator.labels" . | nindent 4 }}
 spec:
   ports:
     - port: {{ .Values.metrics.port }}
@@ -12,5 +11,4 @@ spec:
       protocol: TCP
       name: metrics
   selector:
-    app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "zap-operator.selectorLabels" . | nindent 4 }}

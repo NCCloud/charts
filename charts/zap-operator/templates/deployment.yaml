@@ -3,14 +3,12 @@ kind: Deployment
 metadata:
   name: {{ include "zap-operator.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "zap-operator.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- include "zap-operator.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,8 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        app.kubernetes.io/name: {{ include "zap-operator.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- include "zap-operator.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
