@@ -21,11 +21,6 @@ A Helm chart for deploying the OWASP ZAP Operator
 | affinity | object | `{}` |  |
 | extraEnvs | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
-| grafanaDashboard.annotations | object | `{}` | Annotations to add to the ConfigMap |
-| grafanaDashboard.datasourceUid | string | `"prometheus"` | Prometheus datasource UID used in the dashboard |
-| grafanaDashboard.enabled | bool | `false` | Enable Grafana dashboard ConfigMap generation |
-| grafanaDashboard.labels | object | `{"grafana_dashboard":"1"}` | Labels to add to the ConfigMap (e.g., for Grafana sidecar discovery) |
-| grafanaDashboard.namespace | string | `""` | Namespace where the ConfigMap will be created (defaults to release namespace) |
 | health.port | int | `8081` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/nccloud/zap-operator"` |  |
