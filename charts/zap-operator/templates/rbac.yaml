@@ -1,0 +1,29 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "zap-operator.fullname" . }}
+rules:
+  - apiGroups: ["spaceship.com"]
+    resources: ["zapscans", "zapscans/status", "zapscheduledscans", "zapscheduledscans/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/exec"]
+    verbs: ["get", "list", "watch", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "zap-operator.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "zap-operator.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "zap-operator.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end -}}

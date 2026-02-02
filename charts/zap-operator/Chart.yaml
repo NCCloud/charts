@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart for deploying the OWASP ZAP Operator
+type: application
+name: zap-operator
+version: 0.1.0
+appVersion: 0.1.0
+sources:
+  - https://github.com/NCCloud/zap-operator
+maintainers:
+  - name: Huseyin BABAL
+    email: huseyin.babal@namecheap.com
