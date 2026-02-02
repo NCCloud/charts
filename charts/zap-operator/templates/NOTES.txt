@@ -1,0 +1,9 @@
+Zap operator installed.
+
+Metrics service:
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "zap-operator.fullname" . }}-metrics 8080:{{ .Values.metrics.port }}
+  curl -s localhost:8080/metrics | head
+
+CRDs:
+  apiVersion: spaceship.com/v1alpha1
+  kinds: ZapScan, ZapScheduledScan

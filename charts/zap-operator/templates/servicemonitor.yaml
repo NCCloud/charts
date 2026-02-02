@@ -1,0 +1,24 @@
+{{- if .Values.metrics.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "zap-operator.fullname" . }}
+  labels:
+    {{- include "zap-operator.labels" . | nindent 4 }}
+  {{- with .Values.metrics.serviceMonitor.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "zap-operator.selectorLabels" . | nindent 6 }}
+  endpoints:
+  - port: "metrics"
+    path: {{ .Values.metrics.serviceMonitor.path }}
+    interval: {{ .Values.metrics.serviceMonitor.scrapeInterval }}
+    scrapeTimeout: {{ .Values.metrics.serviceMonitor.scrapeTimeout }}
+{{- end }}
