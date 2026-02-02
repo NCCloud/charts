@@ -83,19 +83,3 @@ tolerations: []
 affinity: {}
 
 extraEnvs: {}
-
-# Grafana dashboard configuration
-# Note: For the dashboard to display data, metrics must be scraped by Prometheus
-# (e.g., via serviceMonitor or pod annotations)
-grafanaDashboard:
-  # -- Enable Grafana dashboard ConfigMap generation
-  enabled: false
-  # -- Namespace where the ConfigMap will be created (defaults to release namespace)
-  namespace: ""
-  # -- Labels to add to the ConfigMap (e.g., for Grafana sidecar discovery)
-  labels:
-    grafana_dashboard: "1"
-  # -- Annotations to add to the ConfigMap
-  annotations: {}
-  # -- Prometheus datasource UID used in the dashboard
-  datasourceUid: "prometheus"
