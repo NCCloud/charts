@@ -435,4 +435,20 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/wireguard-operator-0.1.0/wireguard-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-15T09:43:13.061637524Z"
+  zap-operator:
+  - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2026-02-02T16:19:00.420194421Z"
+    description: A Helm chart for deploying the OWASP ZAP Operator
+    digest: d803e274187ae6424792fcd4642afac3f5a66ed3932a364ac0b0fdf18e625e26
+    maintainers:
+    - email: huseyin.babal@namecheap.com
+      name: huseyinbabal
+    name: zap-operator
+    sources:
+    - https://github.com/NCCloud/zap-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
+    version: 0.1.1
+generated: "2026-02-02T16:19:00.420266576Z"
