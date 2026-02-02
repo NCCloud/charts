@@ -7,5 +7,5 @@ appVersion: 0.1.0
 sources:
   - https://github.com/NCCloud/zap-operator
 maintainers:
-  - name: Huseyin BABAL
+  - name: huseyinbabal
     email: huseyin.babal@namecheap.com
