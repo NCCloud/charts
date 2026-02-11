@@ -7,5 +7,5 @@ appVersion: "v0.12.3"
 sources:
   - https://github.com/SuperQ/chrony_exporter
 maintainers:
-  - name: vadimsamofalov
-    email: vadim.samofalov@namecheap.com
+  - name: Scholzomat
+    email: cloud@namecheap.com
