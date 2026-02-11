@@ -1,0 +1,60 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: chrony-exporter-rules
+  labels:
+      {{- include "chrony-exporter.labels" . | nindent 4 }}
+spec:
+  groups:
+    - name: chrony-exporter.rules
+      rules:
+        - alert: ClockNotSynchronized
+          expr: |
+            abs(chrony_tracking_last_offset_seconds)
+            +
+            chrony_tracking_root_dispersion_seconds
+            +
+            (0.5 * chrony_tracking_root_delay_seconds) > 0.05
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
+            summary: Check chrony on the node
+            description: 'Clock error exceeds 50ms on {{ `{{ $labels.nodename }}` }}'
+        - alert: ChronyLargeTimeOffset
+          expr: abs(chrony_tracking_last_offset_seconds) > 0.5
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
+            summary: 'Chrony time offset elevated on {{ `{{ $labels.nodename }}` }}'
+            description: 'System time offset is {{ `{{ $value }}` }}s on {{ `{{ $labels.nodename }}` }}'
+        - alert: ChronyNoReachableServers
+          expr: chrony_sources_reachability_success == 0
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
+            summary: 'No reachable NTP sources on {{ `{{ $labels.nodename }}` }}'
+            description: 'Chrony has no reachable NTP sources on {{ `{{ $labels.nodename }}` }}. Time synchronization will fail'
+        - alert: ChronyHighRootDispersion
+          expr: chrony_tracking_root_dispersion_seconds > 0.1
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
+            summary: 'High root dispersion on {{ `{{ $labels.nodename }}` }}'
+            description: 'Root dispersion is {{ `{{ $value }}` }}s on {{ `{{ $labels.nodename }}` }}, indicating potential timing accuracy issues'
+        - alert: ChronyHighStratum
+          expr: chrony_tracking_stratum > 5
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
+            summary: 'Chrony stratum too high on {{ `{{ $labels.nodename }}` }}'
+            description: 'Chrony stratum is {{ `{{ $value }}` }} on {{ `{{ $labels.nodename }}` }}. The server may be too far from authoritative time sources'
