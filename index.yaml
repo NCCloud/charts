@@ -1,5 +1,21 @@
 apiVersion: v1
 entries:
+  chrony-exporter:
+  - apiVersion: v2
+    appVersion: v0.12.3
+    created: "2026-02-11T16:00:25.609140161Z"
+    description: Helm chart for chrony-exporter
+    digest: 6c3ba702179041e42f1849b7626e7fbe63a58cea1b4e050262907672b04f8f1a
+    maintainers:
+    - email: cloud@namecheap.com
+      name: Scholzomat
+    name: chrony-exporter
+    sources:
+    - https://github.com/SuperQ/chrony_exporter
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/chrony-exporter-0.0.1/chrony-exporter-0.0.1.tgz
+    version: 0.0.1
   csi-hostpath-plugin:
   - apiVersion: v1
     created: "2024-01-18T14:53:03.365819485Z"
@@ -451,4 +467,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-02T16:19:00.420266576Z"
+generated: "2026-02-11T16:00:25.609206188Z"
