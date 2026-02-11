@@ -1,0 +1,53 @@
+# Default values for chrony-exporter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: quay.io/superq/chrony-exporter
+  pullPolicy: IfNotPresent
+  tag: v0.12.3
+
+# imagePullSecrets: []
+# nameOverride: ""
+# fullnameOverride: ""
+
+# Available collectors: https://github.com/SuperQ/chrony_exporter?tab=readme-ov-file#running
+args:
+  - "--chrony.address=unix:///run/chrony/chronyd.sock"
+  - "--collector.chmod-socket"
+  - "--collector.sources"
+  - "--log.level=info"
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  runAsUser: 0
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  port: 9123
+
+resources: {}
+
+# nodeSelector: {}
+
+tolerations:
+  - effect: NoSchedule
+    operator: Exists
+  - effect: NoExecute
+    operator: Exists
+
+# affinity: {}
+
+hostPath:
+  path: /run/chrony/
+  type: Directory
+
+prometheusRule:
+  enabled: true
