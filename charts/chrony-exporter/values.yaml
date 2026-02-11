@@ -48,3 +48,6 @@ tolerations:
 hostPath:
   path: /run/chrony/
   type: Directory
+
+prometheusRule:
+  enabled: true

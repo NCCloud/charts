@@ -1,3 +1,4 @@
+{{- if .Values.prometheusRule.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -58,3 +59,4 @@ spec:
             dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
             summary: 'Chrony stratum too high on {{ `{{ $labels.nodename }}` }}'
             description: 'Chrony stratum is {{ `{{ $value }}` }} on {{ `{{ $labels.nodename }}` }}. The server may be too far from authoritative time sources'
+{{- end }}
