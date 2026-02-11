@@ -1,6 +1,11 @@
 apiVersion: v2
 name: chrony-exporter
-description: Helm chart for chrony-exporter https://github.com/SuperQ/chrony_exporter
+description: Helm chart for chrony-exporter
 type: application
 version: 0.0.1
 appVersion: "v0.12.3"
+sources:
+  - https://github.com/SuperQ/chrony_exporter
+maintainers:
+  - name: vadimsamofalov
+    email: vadim.samofalov@namecheap.com
