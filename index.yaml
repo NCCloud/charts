@@ -3,6 +3,21 @@ entries:
   chrony-exporter:
   - apiVersion: v2
     appVersion: v0.12.3
+    created: "2026-02-13T10:26:24.18346118Z"
+    description: Helm chart for chrony-exporter
+    digest: 724fc508d0abb4d7f4ea5b54ea10a05aba84a372c900ce436c1c47ca3a52115e
+    maintainers:
+    - email: cloud@namecheap.com
+      name: Scholzomat
+    name: chrony-exporter
+    sources:
+    - https://github.com/SuperQ/chrony_exporter
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/chrony-exporter-0.1.0/chrony-exporter-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: v0.12.3
     created: "2026-02-11T16:00:25.609140161Z"
     description: Helm chart for chrony-exporter
     digest: 6c3ba702179041e42f1849b7626e7fbe63a58cea1b4e050262907672b04f8f1a
@@ -467,4 +482,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-11T16:00:25.609206188Z"
+generated: "2026-02-13T10:26:24.183533795Z"
