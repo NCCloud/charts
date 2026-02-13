@@ -15,7 +15,7 @@ spec:
             +
             chrony_tracking_root_dispersion_seconds
             +
-            (0.5 * chrony_tracking_root_delay_seconds) > 0.05
+            (0.5 * chrony_tracking_root_delay_seconds) > 0.25
           for: 10m
           labels:
             severity: warning
@@ -32,15 +32,6 @@ spec:
             dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
             summary: 'Chrony time offset elevated on {{ `{{ $labels.nodename }}` }}'
             description: 'System time offset is {{ `{{ $value }}` }}s on {{ `{{ $labels.nodename }}` }}'
-        - alert: ChronyNoReachableServers
-          expr: chrony_sources_reachability_success == 0
-          for: 10m
-          labels:
-            severity: warning
-          annotations:
-            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
-            summary: 'No reachable NTP sources on {{ `{{ $labels.nodename }}` }}'
-            description: 'Chrony has no reachable NTP sources on {{ `{{ $labels.nodename }}` }}. Time synchronization will fail'
         - alert: ChronyHighRootDispersion
           expr: chrony_tracking_root_dispersion_seconds > 0.1
           for: 15m
