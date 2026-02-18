@@ -294,6 +294,21 @@ entries:
     version: 0.1.0
   netbox-resources-operator:
   - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2026-02-18T12:19:25.164592099Z"
+    description: A Helm chart for deploying the NetBox Resources Operator
+    digest: 313d69633b17359bffd0e88cbea32c3cf6a4a00d8f47ca419338c125f6a66da7
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: netbox-resources-operator
+    sources:
+    - https://github.com/NCCloud/netbox-resources-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/netbox-resources-operator-0.1.1/netbox-resources-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2026-01-14T10:54:26.655455713Z"
     description: A Helm chart for deploying the NetBox Resources Operator
@@ -482,4 +497,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-13T10:26:24.183533795Z"
+generated: "2026-02-18T12:19:25.164668982Z"
