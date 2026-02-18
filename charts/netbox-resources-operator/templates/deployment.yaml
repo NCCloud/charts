@@ -41,7 +41,7 @@ spec:
             - name: NETBOX_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ required ".Values.netboxTokenSecretName must be set" .Values.operatorConfig.netboxTokenSecretName }}
+                  name: {{ required ".Values.operatorConfig.netboxTokenSecretName must be set" .Values.operatorConfig.netboxTokenSecretName }}
                   key: token
             - name: NAMESPACE
               valueFrom:
