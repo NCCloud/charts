@@ -86,8 +86,8 @@ configuration:
   namespaces: []
   # -- The maximum number of concurrent reconciliations
   maxConcurrentReconciles: 1
-  # -- The controller log level
-  logLevel: "info" # info, debug, warn, error
+  # -- The controller log level, one of: info, debug, warn, error
+  logLevel: "info"
 
   # -- The value for GOMAXPROCS. By default, the CPU limit of the deployment.
   # See https://pkg.go.dev/runtime#hdr-Environment_Variables

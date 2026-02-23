@@ -23,7 +23,7 @@ Metadata Reflector
 | configuration.backgroundReflectionInterval | string | `"5m"` | The frequency of the background reconciliation. Set to 0 to disable |
 | configuration.gomaxprocsOverride | string | `""` | The value for GOMAXPROCS. By default, the CPU limit of the deployment. See https://pkg.go.dev/runtime#hdr-Environment_Variables |
 | configuration.gomemlimitOverride | string | `""` | The value for GOMEMLIMIT. By default, the memory limit of the deployment. See https://pkg.go.dev/runtime#hdr-Environment_Variables |
-| configuration.logLevel | string | `"info"` | The controller log level |
+| configuration.logLevel | string | `"info"` | The controller log level, one of: info, debug, warn, error |
 | configuration.maxConcurrentReconciles | int | `1` | The maximum number of concurrent reconciliations |
 | configuration.namespaces | list | `[]` | A list of namespaces to watch |
 | configuration.resourceSelector | object | `{}` | Configure what resources will be watched by the controller. An example can be seen in `values.yaml`. At the moment, only Deployment is supported |
