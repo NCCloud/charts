@@ -237,6 +237,20 @@ entries:
     version: 1.0.0
   metadata-reflector:
   - apiVersion: v1
+    appVersion: 0.4.1
+    created: "2026-02-24T11:05:16.909070117Z"
+    description: Metadata Reflector
+    digest: 231f31e3dbf5b3fca0b2be95a6e92980c08ed00f8d721bbdd9da8d068f6a426d
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: metadata-reflector
+    sources:
+    - https://github.com/NCCloud/metadata-reflector
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/metadata-reflector-0.3.1/metadata-reflector-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
     appVersion: 0.4.0
     created: "2026-02-23T16:02:53.330837674Z"
     description: Metadata Reflector
@@ -511,4 +525,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-23T16:02:53.330944903Z"
+generated: "2026-02-24T11:05:16.909144056Z"
