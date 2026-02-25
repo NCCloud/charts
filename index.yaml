@@ -472,6 +472,25 @@ entries:
     version: 1.0.0
   wireguard-operator:
   - apiVersion: v2
+    appVersion: v2.10.0
+    created: "2026-02-25T12:45:11.622770217Z"
+    description: Wireguard kubernetes operator
+    digest: da0e9591ef97f7fe737a1f9c567db6161fed0e51dd29afe572f33fa15ac0e2b1
+    keywords:
+    - wireguard
+    - operator
+    - kubernetes
+    maintainers:
+    - email: nemanja.zeljkovic@namecheap.com
+      name: nocturo
+    name: wireguard-operator
+    sources:
+    - https://github.com/nccloud/wireguard-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/wireguard-operator-0.2.1/wireguard-operator-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: v2.9.0
     created: "2025-11-26T15:59:09.105031187Z"
     description: Wireguard kubernetes operator
@@ -525,4 +544,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-24T11:05:16.909144056Z"
+generated: "2026-02-25T12:45:11.622855947Z"
