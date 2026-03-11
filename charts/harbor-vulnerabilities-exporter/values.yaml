@@ -22,10 +22,10 @@ harborPassword: ''
 
 # -- additional environment variables to pass to the container
 extraEnv: []
-# -- number of threads for exporter script to call Harbor API
+# -- number of threads for exporter script to call Harbor API, 5 by default
 # - name: THREADS
 #   value: "5"
-# -- maximum number of characters to store in the description label, 0 means no limit
+# -- maximum number of characters to store in the description label, 0 by default means no limit
 # - name: DESCRIPTION_MAX_LENGTH
 #   value: "0"
 
