@@ -44,6 +44,24 @@ resources: {}
 #    cpu: 100m
 #    memory: 64Mi
 
+livenessProbe: {}
+#  httpGet:
+#    path: /metrics
+#    port: 8000
+#  initialDelaySeconds: 60
+#  periodSeconds: 60
+#  timeoutSeconds: 30
+#  failureThreshold: 3
+
+readinessProbe: {}
+#  httpGet:
+#    path: /metrics
+#    port: 8000
+#  initialDelaySeconds: 30
+#  periodSeconds: 30
+#  timeoutSeconds: 30
+#  failureThreshold: 3
+
 serviceMonitor:
   # -- serviceMonitor can be disabled if needed
   enabled: true
