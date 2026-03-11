@@ -1,6 +1,6 @@
 # harbor-vulnerabilities-exporter
 
-![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square)
+![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![AppVersion: 0.0.7](https://img.shields.io/badge/AppVersion-0.0.7-informational?style=flat-square)
 
 A Helm chart for showing vulnerabilities information in images stored in Harbor
 
@@ -26,7 +26,7 @@ A Helm chart for showing vulnerabilities information in images stored in Harbor
 | harborUsername | string | `""` | script won't use credentials if values are empty read-only user should be enough |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/nccloud/harbor-vulnerabilities-exporter"` |  |
-| image.tag | string | `"latest"` |  |
+| image.tag | string | `""` |  |
 | livenessProbe | object | `{}` |  |
 | readinessProbe | object | `{}` |  |
 | replicas | int | `1` |  |
