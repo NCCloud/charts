@@ -27,13 +27,13 @@ spec:
             - name: HARBOR_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecret | default (include "harbor-vulnerabilities-exporter.name" .) }}
-                  key: username
+                  name: {{ .Values.existingSecret.secretName | default (include "harbor-vulnerabilities-exporter.name" .) }}
+                  key: {{ .Values.existingSecret.usernameKey }}
             - name: HARBOR_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecret | default (include "harbor-vulnerabilities-exporter.name" .) }}
-                  key: password
+                  name: {{ .Values.existingSecret.secretName | default (include "harbor-vulnerabilities-exporter.name" .) }}
+                  key: {{ .Values.existingSecret.passwordKey }}
             - name: EXPORTER_PORT
               value: "{{ .Values.exporterPort }}"
             - name: IGNORE_REPOSITORIES

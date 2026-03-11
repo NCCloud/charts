@@ -11,12 +11,15 @@ exporterPort: 8000
 # - project/repo1
 # - project/repo2
 
-# -- name of an existing Secret with username and password keys; if set, harborUsername and harborPassword are ignored
-existingSecret: ""
+# -- existing Secret with harbor credentials; if secretName is set, harborUsername and harborPassword are ignored
+existingSecret:
+  secretName: ""
+  usernameKey: username
+  passwordKey: password
 
 # -- script won't use credentials if values are empty read-only user should be enough
-harborUsername: ''
-harborPassword: ''
+harborUsername: ""
+harborPassword: ""
 
 # -- additional environment variables to pass to the container
 extraEnv: []
