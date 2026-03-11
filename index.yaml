@@ -60,6 +60,20 @@ entries:
     version: 1.0.0
   harbor-vulnerabilities-exporter:
   - apiVersion: v2
+    created: "2026-03-11T10:30:56.629973355Z"
+    description: A Helm chart for showing vulnerabilities information in images stored
+      in Harbor
+    digest: 8234ecfe13046f775931d7891c091a3ea6193381f8348c8ad8e23731c19d22da
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: harbor-vulnerabilities-exporter
+    sources:
+    - https://github.com/NCCloud/harbor-vulnerabilities-exporter
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/harbor-vulnerabilities-exporter-1.1.1/harbor-vulnerabilities-exporter-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2026-03-11T09:52:01.721950471Z"
     description: A Helm chart for showing vulnerabilities information in images stored
       in Harbor
@@ -558,4 +572,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zap-operator-0.1.1/zap-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-11T09:52:01.722025561Z"
+generated: "2026-03-11T10:30:56.630067721Z"
