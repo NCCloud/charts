@@ -1,7 +1,5 @@
 ---
-# -- override the chart name
 # nameOverride: ""
-# -- fully override the resource name
 # fullnameOverride: ""
 
 replicas: 1
