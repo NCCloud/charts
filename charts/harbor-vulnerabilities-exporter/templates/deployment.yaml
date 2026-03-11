@@ -18,18 +18,42 @@ spec:
       containers:
         - name: harbor-vulnerabilities-exporter
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.exporterPort }}
           env:
             - name: HARBOR_API_URL
               value: "{{ .Values.harborApiUrl }}"
             - name: HARBOR_USERNAME
-              value: "{{ .Values.harborUsername }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.secretName | default (include "harbor-vulnerabilities-exporter.name" .) }}
+                  key: {{ .Values.existingSecret.usernameKey }}
             - name: HARBOR_PASSWORD
-              value: "{{ .Values.harborPassword }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.secretName | default (include "harbor-vulnerabilities-exporter.name" .) }}
+                  key: {{ .Values.existingSecret.passwordKey }}
             - name: EXPORTER_PORT
               value: "{{ .Values.exporterPort }}"
-            - name: THREADS
-              value: "{{ .Values.threadCount }}"
             - name: IGNORE_REPOSITORIES
               value: '{{ join "," .Values.ignoreRepositories }}'
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: {{ .Values.exporterPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: {{ .Values.exporterPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

@@ -1,22 +1,48 @@
 ---
+# nameOverride: ""
+# fullnameOverride: ""
+
 replicas: 1
 harborApiUrl: 'http://harbor-harbor-harbor-core.harbor/api/v2.0'
 exporterPort: 8000
-# -- number of threads for exporter script to call Harbor API
-threadCount: 5
 
 # -- list of project/repositories to ignore (won't create a metric in prometheus)
 # ignoreRepositories:
 # - project/repo1
 # - project/repo2
 
+# -- existing Secret with harbor credentials; if secretName is set, harborUsername and harborPassword are ignored
+existingSecret:
+  secretName: ""
+  usernameKey: username
+  passwordKey: password
+
 # -- script won't use credentials if values are empty read-only user should be enough
-harborUsername: ''
-harborPassword: ''
+harborUsername: ""
+harborPassword: ""
+
+# -- additional environment variables to pass to the container
+extraEnv: []
+# -- number of threads for exporter script to call Harbor API, 5 by default
+# - name: THREADS
+#   value: "5"
+# -- maximum number of characters to store in the description label, 0 by default means no limit
+# - name: DESCRIPTION_MAX_LENGTH
+#   value: "0"
 
 image:
   repository: ghcr.io/nccloud/harbor-vulnerabilities-exporter
   tag: latest
+  pullPolicy: IfNotPresent
+
+# -- resource requests and limits for the exporter container
+resources: {}
+#  limits:
+#    cpu: 200m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 64Mi
 
 serviceMonitor:
   # -- serviceMonitor can be disabled if needed
