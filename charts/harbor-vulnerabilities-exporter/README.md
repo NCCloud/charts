@@ -1,6 +1,6 @@
 # harbor-vulnerabilities-exporter
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
 
 A Helm chart for showing vulnerabilities information in images stored in Harbor
 
