@@ -32,7 +32,7 @@ extraEnv: []
 
 image:
   repository: ghcr.io/nccloud/harbor-vulnerabilities-exporter
-  tag: latest
+  tag: ""
   pullPolicy: IfNotPresent
 
 # -- resource requests and limits for the exporter container
