@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      {{- include "harbor-vulnerabilities-exporter.labels" . | nindent 6 }}
+      {{- include "harbor-vulnerabilities-exporter.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
