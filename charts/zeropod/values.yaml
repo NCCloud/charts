@@ -1,0 +1,100 @@
+# -- Enable GKE-specific host paths (sets zeropodOpt to /var/lib/toolbox/zeropod and passes -host-opt-path to the installer)
+gke: false
+
+# -- Enable K3s-specific host paths and pass -runtime=k3s -probe-binary-name=k3s to the installer
+k3s: false
+
+# -- Enable RKE2-specific host paths and pass -runtime=rke2 to the installer
+rke2: false
+
+# Installer and manager image tags default to the chart appVersion.
+# To override a specific image tag, set image.installer.tag or image.manager.tag in values.
+image:
+  installer:
+    # -- Image pull policy for the installer init container
+    pullPolicy: IfNotPresent
+    # -- Repository for the installer init container image
+    repository: ghcr.io/ctrox/zeropod-installer
+    # -- Tag for the installer image; defaults to the chart appVersion if not set
+    tag: v0.11.3
+  manager:
+    # -- Image pull policy for the manager container
+    pullPolicy: IfNotPresent
+    # -- Repository for the manager container image
+    repository: ghcr.io/ctrox/zeropod-manager
+    # -- Tag for the manager image; defaults to the chart appVersion if not set
+    tag: v0.11.3
+  # -- Alpine image used to mount the eBPF filesystem before the manager starts
+  prepareBpfFs:
+    # -- Image pull policy for the prepare-bpf-fs init container
+    pullPolicy: IfNotPresent
+    # -- Repository for the prepare-bpf-fs init container image
+    repository: alpine
+    # -- Tag for the prepare-bpf-fs image
+    tag: 3.19.1
+
+installer:
+  # -- CRIU container image pulled and installed by the installer init container
+  criuImage: ghcr.io/ctrox/zeropod-criu:v4.2
+
+  # -- Run the installer in uninstall mode to remove all zeropod files from the host
+  uninstall: false
+
+manager:
+  # -- Enable debug logging in the manager
+  debug: false
+
+  # -- Adjust pod resource requests to zero during scale-down; requires the InPlacePodVerticalScaling feature gate
+  inPlaceScaling: true
+
+  # -- Address for the Prometheus metrics endpoint
+  metricsAddr: ":8080"
+
+  # -- Enable CRUD access to Migration CRs and pod listing for node-to-node pod migration
+  migrationManager: true
+
+  # -- Enable updating pod spec and resize subresource; required when inPlaceScaling or statusLabels is enabled
+  podUpdater: true
+
+  # -- Security context for the manager container; requires SYS_PTRACE and SYS_ADMIN for CRIU, NET_ADMIN for eBPF qdiscs/filters, SYS_RESOURCE for memlock rlimit
+  securityContext:
+    appArmorProfile:
+      type: Unconfined
+    capabilities:
+      add:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_PTRACE
+      - SYS_RESOURCE
+
+  # -- Create a headless Service and ServiceMonitor for Prometheus scraping
+  serviceMonitor:
+    # -- Enable the ServiceMonitor and headless Service
+    enabled: false
+    # -- Prometheus scrape interval
+    interval: 30s
+    # -- Prometheus relabeling rules applied to scraped metrics
+    relabelings: []
+    # -- Prometheus scrape timeout
+    scrapeTimeout: 10s
+
+  # -- Create Kubernetes events on scale-down and restore
+  statusEvents: true
+
+  # -- Set status.zeropod.ctrox.dev/<container>: RUNNING|SCALED_DOWN labels on pods
+  statusLabels: true
+
+  # -- Ignore localhost connections in the socket tracker; useful when probes or sidecars connect on loopback
+  trackerIgnoreLocalhost: false
+
+# -- Node selector for the DaemonSet; nodes must be labeled zeropod.ctrox.dev/node=true to receive the DaemonSet
+nodeSelector:
+  zeropod.ctrox.dev/node: "true"
+
+runtimeClass:
+  # -- Name of the RuntimeClass; reference in pod specs with runtimeClassName: zeropod
+  name: zeropod
+
+# -- Tolerations for the DaemonSet; tolerates all taints by default to run on every labeled node regardless of taints
+tolerations:
+  - operator: Exists

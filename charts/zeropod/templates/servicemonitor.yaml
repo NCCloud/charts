@@ -1,0 +1,25 @@
+{{- if .Values.manager.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpoints:
+  - port: metrics
+    {{- if .Values.manager.serviceMonitor.interval }}
+    interval: {{ .Values.manager.serviceMonitor.interval }}
+    {{- end }}
+    {{- if .Values.manager.serviceMonitor.relabelings }}
+    relabelings:
+      {{- toYaml .Values.manager.serviceMonitor.relabelings | nindent 6 }}
+    {{- end }}
+    {{- if .Values.manager.serviceMonitor.scrapeTimeout }}
+    scrapeTimeout: {{ .Values.manager.serviceMonitor.scrapeTimeout }}
+    {{- end }}
+  selector:
+    matchLabels:
+      {{- include "zeropod.selectorLabels" . | nindent 6 }}
+{{- end }}

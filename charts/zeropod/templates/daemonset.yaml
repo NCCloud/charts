@@ -1,0 +1,187 @@
+{{- $containerdEtc := "/etc/containerd" }}
+{{- $containerdRun := "/run/containerd" }}
+{{- $installerHostOptPath := "" }}
+{{- $installerRuntime := "" }}
+{{- $zeropodOpt := "/opt/zeropod" }}
+{{- if .Values.k3s }}
+  {{- $containerdEtc = "/var/lib/rancher/k3s/agent/etc/containerd/" }}
+  {{- $containerdRun = "/run/k3s/containerd/" }}
+  {{- $installerRuntime = "k3s" }}
+  {{- $zeropodOpt = "/var/lib/rancher/k3s/agent/containerd" }}
+{{- end }}
+{{- if .Values.rke2 }}
+  {{- $containerdEtc = "/var/lib/rancher/rke2/agent/etc/containerd/" }}
+  {{- $containerdRun = "/run/k3s/containerd/" }}
+  {{- $installerRuntime = "rke2" }}
+  {{- $zeropodOpt = "/var/lib/rancher/rke2/agent/containerd" }}
+{{- end }}
+{{- if .Values.gke }}
+  {{- $installerHostOptPath = "/var/lib/toolbox/zeropod" }}
+  {{- $zeropodOpt = "/var/lib/toolbox/zeropod" }}
+{{- end }}
+{{- $optPath := $zeropodOpt | dir }}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}-node
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "zeropod.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "zeropod.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+      - args:
+        - -criu-image={{ .Values.installer.criuImage }}
+        {{- if $installerHostOptPath }}
+        - -host-opt-path={{ $installerHostOptPath }}
+        {{- end }}
+        {{- if $installerRuntime }}
+        - -runtime={{ $installerRuntime }}
+        {{- end }}
+        {{- if eq $installerRuntime "k3s" }}
+        - -probe-binary-name=k3s
+        {{- end }}
+        {{- if .Values.installer.uninstall }}
+        - -uninstall
+        {{- end }}
+        image: {{ .Values.image.installer.repository }}:{{ .Values.image.installer.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.installer.pullPolicy }}
+        name: installer
+        volumeMounts:
+        - mountPath: /host
+          name: hostroot
+        - mountPath: /etc/containerd
+          name: containerd-etc
+        {{- if .Values.installer.uninstall }}
+        - mountPath: /opt
+          name: opt
+        {{- else }}
+        - mountPath: /run/containerd
+          name: containerd-run
+        {{- end }}
+        - mountPath: /opt/zeropod
+          name: zeropod-opt
+        - mountPath: /run/systemd
+          name: systemd-run
+        - mountPath: /etc/criu
+          name: criu-etc
+        - mountPath: /tls
+          name: tls
+      - args:
+        - mount | grep "/sys/fs/bpf type bpf" || mount -t bpf bpf /sys/fs/bpf
+        command:
+        - /bin/sh
+        - -c
+        - --
+        image: {{ .Values.image.prepareBpfFs.repository }}:{{ .Values.image.prepareBpfFs.tag }}
+        imagePullPolicy: {{ .Values.image.prepareBpfFs.pullPolicy }}
+        name: prepare-bpf-fs
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /sys/fs/bpf
+          mountPropagation: Bidirectional
+          name: bpf
+      containers:
+      - args:
+        - -metrics-addr={{ .Values.manager.metricsAddr }}
+        {{- if .Values.manager.debug }}
+        - -debug=true
+        {{- end }}
+        {{- if .Values.manager.inPlaceScaling }}
+        - -in-place-scaling=true
+        {{- end }}
+        {{- if .Values.manager.statusLabels }}
+        - -status-labels=true
+        {{- end }}
+        {{- if .Values.manager.statusEvents }}
+        - -status-events=true
+        {{- end }}
+        {{- if .Values.manager.trackerIgnoreLocalhost }}
+        - -tracker-ignore-localhost=true
+        {{- end }}
+        command:
+        - /zeropod-manager
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        image: {{ .Values.image.manager.repository }}:{{ .Values.image.manager.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.manager.pullPolicy }}
+        name: manager
+        ports:
+        - containerPort: 8080
+          name: metrics
+        - containerPort: 8090
+          name: node-server
+        securityContext:
+          {{- toYaml .Values.manager.securityContext | nindent 10 }}
+        volumeMounts:
+        - mountPath: /run/zeropod
+          name: zeropod-run
+        - mountPath: /var/lib/zeropod
+          name: zeropod-var
+        - mountPath: /hostproc
+          name: hostproc
+        - mountPath: /sys/fs/bpf
+          name: bpf
+        - mountPath: /tls
+          name: tls
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      serviceAccountName: {{ include "zeropod.fullname" . }}-node
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      volumes:
+      - hostPath:
+          path: {{ $containerdEtc }}
+        name: containerd-etc
+      {{- if .Values.installer.uninstall }}
+      - hostPath:
+          path: /opt
+        name: opt
+      {{- else }}
+      - hostPath:
+          path: {{ $containerdRun }}
+        name: containerd-run
+      {{- end }}
+      - hostPath:
+          path: {{ $zeropodOpt }}
+        name: zeropod-opt
+      - hostPath:
+          path: /
+        name: hostroot
+      - hostPath:
+          path: /var/lib/zeropod
+        name: zeropod-var
+      - hostPath:
+          path: /run/zeropod
+        name: zeropod-run
+      - hostPath:
+          path: /run/systemd
+        name: systemd-run 
+      - hostPath:
+          path: /etc/criu
+        name: criu-etc
+      - hostPath:
+          path: /proc
+          type: Directory
+        name: hostproc
+      - hostPath:
+          path: /sys/fs/bpf
+          type: Directory
+        name: bpf
+      - emptyDir: {}
+        name: tls

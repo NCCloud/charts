@@ -1,0 +1,44 @@
+{{- if .Values.manager.migrationManager }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}:migration-manager
+rules:
+- apiGroups:
+  - runtime.zeropod.ctrox.dev
+  resources:
+  - migrations
+  - migrations/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}:migration-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "zeropod.fullname" . }}:migration-manager
+subjects:
+- kind: ServiceAccount
+  name: {{ include "zeropod.fullname" . }}-node
+  namespace: {{ .Release.Namespace }}
+{{- end }}
