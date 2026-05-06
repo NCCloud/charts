@@ -1,0 +1,30 @@
+{{- if .Values.manager.statusEvents }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}:event-creator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}:event-creator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "zeropod.fullname" . }}:event-creator
+subjects:
+- kind: ServiceAccount
+  name: {{ include "zeropod.fullname" . }}-node
+  namespace: {{ .Release.Namespace }}
+{{- end }}

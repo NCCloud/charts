@@ -1,0 +1,16 @@
+{{- if .Values.manager.serviceMonitor.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}-metrics
+spec:
+  clusterIP: None
+  ports:
+  - name: metrics
+    port: {{ .Values.manager.metricsAddr | trimPrefix ":" | int }}
+    targetPort: metrics
+  selector:
+    {{- include "zeropod.selectorLabels" . | nindent 4 }}
+{{- end }}

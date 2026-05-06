@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ include "zeropod.fullname" . }}:secret-creator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "zeropod.fullname" . }}:secret-creator
+subjects:
+- kind: ServiceAccount
+  name: {{ include "zeropod.fullname" . }}-node
+  namespace: {{ .Release.Namespace }}

@@ -1,0 +1,43 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+This chart installs [zeropod](https://github.com/ctrox/zeropod) on your cluster.
+
+Zeropod intercepts network connections at the eBPF level. When no connections are active for a
+configured duration, it checkpoints the container to disk using [CRIU](https://criu.org) and
+adjusts its resource requests to zero. The next incoming connection triggers a restore. From the
+application's perspective the process is never restarted — its memory and file descriptors are
+fully preserved. Depending on the memory size of the checkpointed program this happens in tens 
+to a few hundred milliseconds, virtually unnoticeable to the user.
+
+## Requirements
+
+- Kubernetes 1.23+ (1.31+ for `inPlaceScaling`)
+- Containerd 1.7+
+- `runtimeClass` must be referenced in pod specs: `runtimeClassName: zeropod`
+- Nodes must be labeled `zeropod.ctrox.dev/node=true` before the DaemonSet will schedule onto them
+
+{{ template "chart.valuesSection" . }}
+
+## Distribution support
+
+By default the chart targets a standard containerd installation. Set the flag that matches your
+environment if you are running GKE, K3s or RKE2. Each flag rewrites the containerd host paths
+and passes the appropriate flags to the installer init container. Only one flag should be set at
+a time.
+
+| Flag | containerd config path | containerd run path | zeropod opt path |
+|------|----------------------|--------------------|--------------------|
+| *(default)* | `/etc/containerd` | `/run/containerd` | `/opt/zeropod` |
+| `gke: true` | `/etc/containerd` | `/run/containerd` | `/var/lib/toolbox/zeropod` |
+| `k3s: true` | `/var/lib/rancher/k3s/agent/etc/containerd` | `/run/k3s/containerd` | `/var/lib/rancher/k3s/agent/containerd` |
+| `rke2: true` | `/var/lib/rancher/rke2/agent/etc/containerd` | `/run/k3s/containerd` | `/var/lib/rancher/rke2/agent/containerd` |
+
+## Uninstall
+
+To remove zeropod from all labeled nodes, set `installer.uninstall=true` and re-apply the chart.
+The installer init container will remove zeropod binaries and restore the original containerd
+configuration on each node, then restart the runtime. After uninstall is finished, helm chart installation can be removed.

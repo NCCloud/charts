@@ -1,0 +1,10 @@
+apiVersion: node.k8s.io/v1
+handler: {{ .Values.runtimeClass.name }}
+kind: RuntimeClass
+metadata:
+  labels:
+    {{- include "zeropod.labels" . | nindent 4 }}
+  name: {{ .Values.runtimeClass.name }}
+scheduling:
+  nodeSelector:
+    {{- toYaml .Values.nodeSelector | nindent 4 }}
