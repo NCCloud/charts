@@ -26,7 +26,6 @@ metadata:
   labels:
     {{- include "zeropod.labels" . | nindent 4 }}
   name: {{ include "zeropod.fullname" . }}-node
-  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:

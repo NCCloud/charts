@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "zeropod.labels" . | nindent 4 }}
   name: {{ include "zeropod.fullname" . }}
-  namespace: {{ .Release.Namespace }}
 spec:
   endpoints:
   - port: metrics

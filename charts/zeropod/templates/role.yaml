@@ -4,7 +4,6 @@ metadata:
   labels:
     {{- include "zeropod.labels" . | nindent 4 }}
   name: {{ include "zeropod.fullname" . }}:secret-creator
-  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
   - ""
