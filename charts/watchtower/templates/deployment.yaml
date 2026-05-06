@@ -44,8 +44,8 @@ spec:
             value: {{ required "A valid .Values.config.syncPeriod entry required!" .Values.config.syncPeriod | quote }}
           - name: "WATCHER_REFRESH_PERIOD"
             value: {{ required "A valid .Values.config.watcherRefreshPeriod entry required!" .Values.config.watcherRefreshPeriod | quote }}
-          {{- if .Values.extraEnvs }}
-          {{ toYaml .Values.extraEnvs | indent 8 }}
+          {{- with .Values.extraEnvs }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
       serviceAccountName: watchtower
       securityContext:
