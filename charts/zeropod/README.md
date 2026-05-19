@@ -1,6 +1,6 @@
 # zeropod
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.3](https://img.shields.io/badge/AppVersion-v0.11.3-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.3](https://img.shields.io/badge/AppVersion-v0.11.3-informational?style=flat-square)
 
 Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 
@@ -24,6 +24,7 @@ to a few hundred milliseconds, virtually unnoticeable to the user.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{}` | Affinity rules for the DaemonSet |
 | gke | bool | `false` | Enable GKE-specific host paths (sets zeropodOpt to /var/lib/toolbox/zeropod and passes -host-opt-path to the installer) |
 | image.installer.pullPolicy | string | `"IfNotPresent"` | Image pull policy for the installer init container |
 | image.installer.repository | string | `"ghcr.io/ctrox/zeropod-installer"` | Repository for the installer init container image |
