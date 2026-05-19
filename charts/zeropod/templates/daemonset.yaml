@@ -145,8 +145,10 @@ spec:
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       serviceAccountName: {{ include "zeropod.fullname" . }}-node
+      {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml .Values.tolerations | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
       - hostPath:
           path: {{ $containerdEtc }}
