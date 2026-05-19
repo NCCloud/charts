@@ -98,3 +98,6 @@ runtimeClass:
 # -- Tolerations for the DaemonSet; tolerates all taints by default to run on every labeled node regardless of taints
 tolerations:
   - operator: Exists
+
+# -- Affinity rules for the DaemonSet
+affinity: {}

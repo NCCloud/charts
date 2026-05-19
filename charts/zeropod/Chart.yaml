@@ -2,7 +2,7 @@ apiVersion: v2
 name: zeropod
 description: Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: v0.11.3
 sources:
   - https://github.com/ctrox/zeropod
