@@ -138,6 +138,10 @@ spec:
           name: bpf
         - mountPath: /tls
           name: tls
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       serviceAccountName: {{ include "zeropod.fullname" . }}-node
