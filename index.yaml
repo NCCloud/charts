@@ -437,6 +437,19 @@ entries:
     version: 0.0.42
   watchtower:
   - apiVersion: v1
+    created: "2026-06-09T10:05:42.103689228Z"
+    description: Watchtower
+    digest: 80bb76e31c1b0e7a91a5374c8c5a1404f5a48d0a8b7c63f5c092d105395a25db
+    maintainers:
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: watchtower
+    sources:
+    - https://github.com/NCCloud/watchtower
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/watchtower-1.4.0/watchtower-1.4.0.tgz
+    version: 1.4.0
+  - apiVersion: v1
     created: "2026-05-06T09:39:00.220724314Z"
     description: Watchtower
     digest: 273e4c38ca512714ef6273b67da0f5e91bbd50b67edf522457c9381a8d9d0d79
@@ -666,4 +679,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-19T15:19:25.979656168Z"
+generated: "2026-06-09T10:05:42.103730461Z"
