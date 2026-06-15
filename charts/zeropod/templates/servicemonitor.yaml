@@ -4,6 +4,9 @@ kind: ServiceMonitor
 metadata:
   labels:
     {{- include "zeropod.labels" . | nindent 4 }}
+    {{- with .Values.manager.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   name: {{ include "zeropod.fullname" . }}
 spec:
   endpoints:

@@ -71,6 +71,8 @@ manager:
   serviceMonitor:
     # -- Enable the ServiceMonitor and headless Service
     enabled: false
+    # -- Extra labels added to the ServiceMonitor — useful for matching a specific Prometheus instance via serviceMonitorSelector
+    additionalLabels: {}
     # -- Prometheus scrape interval
     interval: 30s
     # -- Prometheus relabeling rules applied to scraped metrics
