@@ -1,6 +1,6 @@
 # zeropod
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.3](https://img.shields.io/badge/AppVersion-v0.11.3-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.3](https://img.shields.io/badge/AppVersion-v0.11.3-informational?style=flat-square)
 
 Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 
@@ -45,9 +45,11 @@ to a few hundred milliseconds, virtually unnoticeable to the user.
 | manager.migrationManager | bool | `true` | Enable CRUD access to Migration CRs and pod listing for node-to-node pod migration |
 | manager.podUpdater | bool | `true` | Enable updating pod spec and resize subresource; required when inPlaceScaling or statusLabels is enabled |
 | manager.securityContext | object | `{"appArmorProfile":{"type":"Unconfined"},"capabilities":{"add":["NET_ADMIN","SYS_ADMIN","SYS_PTRACE","SYS_RESOURCE"]}}` | Security context for the manager container; requires SYS_PTRACE and SYS_ADMIN for CRIU, NET_ADMIN for eBPF qdiscs/filters, SYS_RESOURCE for memlock rlimit |
-| manager.serviceMonitor | object | `{"enabled":false,"interval":"30s","relabelings":[],"scrapeTimeout":"10s"}` | Create a headless Service and ServiceMonitor for Prometheus scraping |
+| manager.serviceMonitor | object | `{"additionalLabels":{},"enabled":false,"interval":"30s","metricRelabelings":[],"relabelings":[],"scrapeTimeout":"10s"}` | Create a headless Service and ServiceMonitor for Prometheus scraping |
+| manager.serviceMonitor.additionalLabels | object | `{}` | Extra labels added to the ServiceMonitor — useful for matching a specific Prometheus instance via serviceMonitorSelector |
 | manager.serviceMonitor.enabled | bool | `false` | Enable the ServiceMonitor and headless Service |
 | manager.serviceMonitor.interval | string | `"30s"` | Prometheus scrape interval |
+| manager.serviceMonitor.metricRelabelings | list | `[]` | Prometheus metric relabeling rules applied to scraped metrics after they are received |
 | manager.serviceMonitor.relabelings | list | `[]` | Prometheus relabeling rules applied to scraped metrics |
 | manager.serviceMonitor.scrapeTimeout | string | `"10s"` | Prometheus scrape timeout |
 | manager.statusEvents | bool | `true` | Create Kubernetes events on scale-down and restore |
