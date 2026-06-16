@@ -20,7 +20,7 @@ spec:
     {{- end }}
     {{- if .Values.manager.serviceMonitor.relabelings }}
     relabelings:
-      {{- toYaml .Values.manager.serviceMonitor.relabelings | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- if .Values.manager.serviceMonitor.scrapeTimeout }}
     scrapeTimeout: {{ .Values.manager.serviceMonitor.scrapeTimeout }}
