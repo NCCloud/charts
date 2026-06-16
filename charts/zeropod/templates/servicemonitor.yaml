@@ -16,7 +16,7 @@ spec:
     {{- end }}
     {{- if .Values.manager.serviceMonitor.metricRelabelings }}
     metricRelabelings:
-      {{- toYaml .Values.manager.serviceMonitor.metricRelabelings | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- if .Values.manager.serviceMonitor.relabelings }}
     relabelings:
