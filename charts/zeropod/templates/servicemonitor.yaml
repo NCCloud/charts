@@ -14,11 +14,11 @@ spec:
     {{- if .Values.manager.serviceMonitor.interval }}
     interval: {{ .Values.manager.serviceMonitor.interval }}
     {{- end }}
-    {{- if .Values.manager.serviceMonitor.metricRelabelings }}
+    {{- with .Values.manager.serviceMonitor.metricRelabelings }}
     metricRelabelings:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    {{- if .Values.manager.serviceMonitor.relabelings }}
+    {{- with .Values.manager.serviceMonitor.relabelings }}
     relabelings:
       {{- toYaml . | nindent 6 }}
     {{- end }}
