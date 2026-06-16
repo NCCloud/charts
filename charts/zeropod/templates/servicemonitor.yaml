@@ -4,6 +4,9 @@ kind: ServiceMonitor
 metadata:
   labels:
     {{- include "zeropod.labels" . | nindent 4 }}
+    {{- with .Values.manager.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   name: {{ include "zeropod.fullname" . }}
 spec:
   endpoints:
@@ -11,9 +14,13 @@ spec:
     {{- if .Values.manager.serviceMonitor.interval }}
     interval: {{ .Values.manager.serviceMonitor.interval }}
     {{- end }}
+    {{- if .Values.manager.serviceMonitor.metricRelabelings }}
+    metricRelabelings:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     {{- if .Values.manager.serviceMonitor.relabelings }}
     relabelings:
-      {{- toYaml .Values.manager.serviceMonitor.relabelings | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- if .Values.manager.serviceMonitor.scrapeTimeout }}
     scrapeTimeout: {{ .Values.manager.serviceMonitor.scrapeTimeout }}
