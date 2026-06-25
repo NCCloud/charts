@@ -50,8 +50,10 @@ operatorConfig:
   netboxUrl: ""
   # -- The name of the secret with a key `token` for read-write NetBox access
   netboxTokenSecretName: ""
-  # -- How many workers can be running simultaneously on per-object event queue
-  operatorWorkerLimit: 10
+  # -- Thread pool size for synchronous handlers (kopf execution.max_workers); caps how many reconcile bodies run at once
+  operatorExecutionMaxWorkers: 10
+  # -- How many objects (CRs) are reconciled concurrently (kopf batching.worker_limit). Leave unset for unlimited (the operator's default)
+  operatorBatchingWorkerLimit: ""
   # -- The number of times a handler can be retried in case of an error
   operatorRetryLimit: 30
   # -- The number of seconds to wait between handler retries in case of an error
