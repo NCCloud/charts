@@ -379,6 +379,21 @@ entries:
     version: 0.1.0
   netbox-resources-operator:
   - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2026-06-25T15:02:54.676079937Z"
+    description: A Helm chart for deploying the NetBox Resources Operator
+    digest: 260ac26fcca65f5e947afb5292515679889c0d2aa25495e82de11c688826fb01
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: netbox-resources-operator
+    sources:
+    - https://github.com/NCCloud/netbox-resources-operator
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/netbox-resources-operator-0.2.0/netbox-resources-operator-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.2.0
     created: "2026-02-18T12:19:25.164592099Z"
     description: A Helm chart for deploying the NetBox Resources Operator
@@ -711,4 +726,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-16T07:51:42.686510115Z"
+generated: "2026-06-25T15:02:54.676169355Z"
