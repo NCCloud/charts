@@ -49,9 +49,13 @@ spec:
                   fieldPath: metadata.namespace
             - name: PROMETHEUS_METRICS_PORT
               value: "{{ .Values.metrics.port }}"
-          {{- if .Values.operatorConfig.operatorWorkerLimit }}
-            - name: OPERATOR_WORKER_LIMIT
-              value: {{ .Values.operatorConfig.operatorWorkerLimit | quote }}
+          {{- if .Values.operatorConfig.operatorExecutionMaxWorkers }}
+            - name: OPERATOR_EXECUTION_MAX_WORKERS
+              value: {{ .Values.operatorConfig.operatorExecutionMaxWorkers | quote }}
+          {{- end }}
+          {{- if .Values.operatorConfig.operatorBatchingWorkerLimit }}
+            - name: OPERATOR_BATCHING_WORKER_LIMIT
+              value: {{ .Values.operatorConfig.operatorBatchingWorkerLimit | quote }}
           {{- end }}
           {{- if .Values.operatorConfig.operatorRetryLimit }}
             - name: OPERATOR_RETRY_LIMIT
