@@ -22,7 +22,7 @@ spec:
           annotations:
             dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
             summary: Check chrony on the node
-            description: 'Clock error exceeds 50ms on {{ `{{ $labels.nodename }}` }}'
+            description: 'Clock error exceeds 250ms on {{ `{{ $labels.nodename }}` }}'
         - alert: ChronyLargeTimeOffset
           expr: abs(chrony_tracking_last_offset_seconds) > 0.5
           for: 10m
@@ -41,13 +41,4 @@ spec:
             dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
             summary: 'High root dispersion on {{ `{{ $labels.nodename }}` }}'
             description: 'Root dispersion is {{ `{{ $value }}` }}s on {{ `{{ $labels.nodename }}` }}, indicating potential timing accuracy issues'
-        - alert: ChronyHighStratum
-          expr: chrony_tracking_stratum > 5
-          for: 15m
-          labels:
-            severity: warning
-          annotations:
-            dashboard: chrony-exporter?var-node={{ `{{ $labels.nodename }}` }}
-            summary: 'Chrony stratum too high on {{ `{{ $labels.nodename }}` }}'
-            description: 'Chrony stratum is {{ `{{ $value }}` }} on {{ `{{ $labels.nodename }}` }}. The server may be too far from authoritative time sources'
 {{- end }}
