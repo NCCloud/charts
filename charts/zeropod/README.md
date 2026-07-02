@@ -1,6 +1,6 @@
 # zeropod
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.3](https://img.shields.io/badge/AppVersion-v0.11.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.1](https://img.shields.io/badge/AppVersion-v0.12.1-informational?style=flat-square)
 
 Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 
