@@ -679,6 +679,22 @@ entries:
   zeropod:
   - apiVersion: v2
     appVersion: v0.12.1
+    created: "2026-07-03T08:41:00.469727899Z"
+    description: Kubernetes runtime for scaling containers to zero after a certain
+      amount of time of the last TCP connection using CRIU checkpointing
+    digest: efbee14e66c1cf9ce6799358f03ee6f5f25e48297d49060dd4b07e3a7ff49ad2
+    maintainers:
+    - email: cloud@namecheap.com
+      name: Scholzomat
+    name: zeropod
+    sources:
+    - https://github.com/ctrox/zeropod
+    type: application
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.5/zeropod-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: v0.12.1
     created: "2026-07-02T08:53:52.154437053Z"
     description: Kubernetes runtime for scaling containers to zero after a certain
       amount of time of the last TCP connection using CRIU checkpointing
@@ -757,4 +773,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-02T08:53:52.154553292Z"
+generated: "2026-07-03T08:41:00.469820413Z"
