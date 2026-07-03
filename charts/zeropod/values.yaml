@@ -16,14 +16,14 @@ image:
     # -- Repository for the installer init container image
     repository: ghcr.io/ctrox/zeropod-installer
     # -- Tag for the installer image; defaults to the chart appVersion if not set
-    tag: v0.11.3
+    tag: ""
   manager:
     # -- Image pull policy for the manager container
     pullPolicy: IfNotPresent
     # -- Repository for the manager container image
     repository: ghcr.io/ctrox/zeropod-manager
     # -- Tag for the manager image; defaults to the chart appVersion if not set
-    tag: v0.11.3
+    tag: ""
   # -- Alpine image used to mount the eBPF filesystem before the manager starts
   prepareBpfFs:
     # -- Image pull policy for the prepare-bpf-fs init container
