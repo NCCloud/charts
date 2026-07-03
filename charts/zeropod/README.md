@@ -1,6 +1,6 @@
 # zeropod
 
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.1](https://img.shields.io/badge/AppVersion-v0.12.1-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.1](https://img.shields.io/badge/AppVersion-v0.12.1-informational?style=flat-square)
 
 Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 
@@ -28,10 +28,10 @@ to a few hundred milliseconds, virtually unnoticeable to the user.
 | gke | bool | `false` | Enable GKE-specific host paths (sets zeropodOpt to /var/lib/toolbox/zeropod and passes -host-opt-path to the installer) |
 | image.installer.pullPolicy | string | `"IfNotPresent"` | Image pull policy for the installer init container |
 | image.installer.repository | string | `"ghcr.io/ctrox/zeropod-installer"` | Repository for the installer init container image |
-| image.installer.tag | string | `"v0.11.3"` | Tag for the installer image; defaults to the chart appVersion if not set |
+| image.installer.tag | string | `""` | Tag for the installer image; defaults to the chart appVersion if not set |
 | image.manager.pullPolicy | string | `"IfNotPresent"` | Image pull policy for the manager container |
 | image.manager.repository | string | `"ghcr.io/ctrox/zeropod-manager"` | Repository for the manager container image |
-| image.manager.tag | string | `"v0.11.3"` | Tag for the manager image; defaults to the chart appVersion if not set |
+| image.manager.tag | string | `""` | Tag for the manager image; defaults to the chart appVersion if not set |
 | image.prepareBpfFs | object | `{"pullPolicy":"IfNotPresent","repository":"alpine","tag":"3.19.1"}` | Alpine image used to mount the eBPF filesystem before the manager starts |
 | image.prepareBpfFs.pullPolicy | string | `"IfNotPresent"` | Image pull policy for the prepare-bpf-fs init container |
 | image.prepareBpfFs.repository | string | `"alpine"` | Repository for the prepare-bpf-fs init container image |
