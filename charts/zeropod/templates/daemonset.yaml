@@ -44,8 +44,11 @@ spec:
         {{- if $installerRuntime }}
         - -runtime={{ $installerRuntime }}
         {{- end }}
-        {{- if eq $installerRuntime "k3s" }}
-        - -probe-binary-name=k3s
+        {{- if .Values.installer.capacityRequest }}
+        - -capacity-request=true
+        {{- end }}
+        {{- if .Values.installer.reuseportActivator }}
+        - -reuseport-activator=true
         {{- end }}
         {{- if .Values.installer.uninstall }}
         - -uninstall
@@ -106,6 +109,15 @@ spec:
         {{- if .Values.manager.trackerIgnoreLocalhost }}
         - -tracker-ignore-localhost=true
         {{- end }}
+        {{- if and .Values.installer.capacityRequest (.Values.manager.capacityEviction).timeout }}
+        - -capacity-eviction-timeout={{ (.Values.manager.capacityEviction).timeout }}
+        {{- end }}
+        {{- if and .Values.installer.capacityRequest (.Values.manager.capacityEviction).threshold }}
+        - -capacity-eviction-threshold={{ (.Values.manager.capacityEviction).threshold }}
+        {{- end }}
+        {{- if and .Values.installer.capacityRequest (.Values.manager.capacityEviction).systemMemory }}
+        - -capacity-system-memory=true
+        {{- end }}
         command:
         - /zeropod-manager
         env:
@@ -125,6 +137,11 @@ spec:
           name: metrics
         - containerPort: 8090
           name: node-server
+        livenessProbe:
+          periodSeconds: 1
+          httpGet:
+            path: /probe
+            port: 8080
         securityContext:
           {{- toYaml .Values.manager.securityContext | nindent 10 }}
         volumeMounts:
@@ -132,6 +149,8 @@ spec:
           name: zeropod-run
         - mountPath: /var/lib/zeropod
           name: zeropod-var
+        - mountPath: /opt/zeropod
+          name: zeropod-opt
         - mountPath: /hostproc
           name: hostproc
         - mountPath: /sys/fs/bpf
@@ -176,7 +195,7 @@ spec:
         name: zeropod-run
       - hostPath:
           path: /run/systemd
-        name: systemd-run 
+        name: systemd-run
       - hostPath:
           path: /etc/criu
         name: criu-etc

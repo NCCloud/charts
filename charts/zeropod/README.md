@@ -1,6 +1,6 @@
 # zeropod
 
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.1](https://img.shields.io/badge/AppVersion-v0.12.1-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0](https://img.shields.io/badge/AppVersion-v0.13.0-informational?style=flat-square)
 
 Kubernetes runtime for scaling containers to zero after a certain amount of time of the last TCP connection using CRIU checkpointing
 
@@ -36,9 +36,12 @@ to a few hundred milliseconds, virtually unnoticeable to the user.
 | image.prepareBpfFs.pullPolicy | string | `"IfNotPresent"` | Image pull policy for the prepare-bpf-fs init container |
 | image.prepareBpfFs.repository | string | `"alpine"` | Repository for the prepare-bpf-fs init container image |
 | image.prepareBpfFs.tag | string | `"3.19.1"` | Tag for the prepare-bpf-fs image |
-| installer.criuImage | string | `"ghcr.io/ctrox/zeropod-criu:v4.2"` | CRIU container image pulled and installed by the installer init container |
+| installer.capacityRequest | bool | `false` | Enable the shim to make a capacity request before restoring (experimental) |
+| installer.criuImage | string | `"ghcr.io/ctrox/zeropod-criu:v4.2.1"` | CRIU container image pulled and installed by the installer init container |
+| installer.reuseportActivator | bool | `false` | Enable the kernel-based reuseport activator instead of the userspace proxy (experimental, requires Linux 6.6+) |
 | installer.uninstall | bool | `false` | Run the installer in uninstall mode to remove all zeropod files from the host |
-| k3s | bool | `false` | Enable K3s-specific host paths and pass -runtime=k3s -probe-binary-name=k3s to the installer |
+| k3s | bool | `false` | Enable K3s-specific host paths and pass -runtime=k3s to the installer |
+| manager.capacityEviction | object | `{}` | Capacity eviction settings; prevents node out-of-memory scenarios by ensuring the node has enough resources to restore a container before allowing it to happen |
 | manager.debug | bool | `false` | Enable debug logging in the manager |
 | manager.inPlaceScaling | bool | `true` | Adjust pod resource requests to zero during scale-down; requires the InPlacePodVerticalScaling feature gate |
 | manager.metricsAddr | string | `":8080"` | Address for the Prometheus metrics endpoint |
