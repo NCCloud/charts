@@ -24,6 +24,7 @@ serviceMonitor:
 prometheusRule:
   enabled: false
   additionalLabels: {}
+  additionalRuleLabels: {}
   builtInRules:
     reconcileErrors: true
     down: true

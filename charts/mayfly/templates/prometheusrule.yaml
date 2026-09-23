@@ -18,7 +18,10 @@ spec:
       expr: rate(controller_runtime_reconcile_errors_total{job="mayfly"}[5m]) > 0.1
       for: 10m
       labels:
-        severity: warning-devops
+        severity: warning
+        {{- with .Values.prometheusRule.additionalRuleLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         dashboard: mayfly-operator
         description: 'Errors while reconciling `{{`{{ $labels.controller }}`}}` controller of Mayfly in `{{`{{ $labels.namespace }}`}}` Namespace.'
@@ -29,7 +32,10 @@ spec:
       expr: absent(up{job="mayfly"})
       for: 10m
       labels:
-        severity: warning-devops
+        severity: critical
+        {{- with .Values.prometheusRule.additionalRuleLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         dashboard: mayfly-operator
         description: Mayfly has disappeared from Prometheus target discovery.

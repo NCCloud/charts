@@ -18,7 +18,10 @@ spec:
       expr: rate(controller_runtime_reconcile_errors_total{job="watchtower"}[5m]) > 0.1
       for: 10m
       labels:
-        severity: warning-devops
+        severity: warning
+        {{- with .Values.prometheusRule.additionalRuleLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         dashboard: watchtower-operator
         description: 'Errors while reconciling `{{`{{ $labels.controller }}`}}` controller of watchtower in `{{`{{ $labels.namespace }}`}}` Namespace.'
@@ -26,19 +29,13 @@ spec:
     {{- end }}
     {{- if .Values.prometheusRule.builtInRules.down }}
     - alert: WatchtowerDown
-      expr: count by(cluster, job, service) (up{job="watchtower"} == 0) / count by(cluster, job, service) (up{job="watchtower"}) or absent(up{job="watchtower"})
+      expr: absent(up{job="watchtower"})
       for: 10m
       labels:
-        severity: warning-devops
-      annotations:
-        dashboard: watchtower-operator
-        description: Watchtower has disappeared from Prometheus target discovery.
-        summary: Watchtower is down.
-    - alert: WatchtowerDown
-      expr: count by(cluster, job, service) (up{job="watchtower"} == 0) / count by(cluster, job, service) (up{job="watchtower"}) or absent(up{job="watchtower"})
-      for: 30m
-      labels:
-        severity: critical-devops
+        severity: critical
+        {{- with .Values.prometheusRule.additionalRuleLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         dashboard: watchtower-operator
         description: Watchtower has disappeared from Prometheus target discovery.
