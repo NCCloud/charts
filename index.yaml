@@ -203,6 +203,21 @@ entries:
     version: 1.0.0
   mayfly:
   - apiVersion: v1
+    created: "2026-09-24T06:48:07.980529415Z"
+    description: Mayfly Operator
+    digest: 4556492a5a951b1cd4d29cc39d0c2227d84841217a0167dbf7f3544f909881a5
+    maintainers:
+    - email: goncalo.lourenco@namecheap.com
+      name: goncalolourenco
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: mayfly
+    sources:
+    - https://github.com/NCCloud/mayfly
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/mayfly-1.3.0/mayfly-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v1
     created: "2026-01-15T09:43:13.061555881Z"
     description: Mayfly Operator
     digest: efb12d7f4e584b6d344329e3839bdbe16f1e4bedb49311e26dc26996f8a9cc36
@@ -466,6 +481,19 @@ entries:
     - https://github.com/NCCloud/charts/releases/download/tabby-operator-0.0.42/tabby-operator-0.0.42.tgz
     version: 0.0.42
   watchtower:
+  - apiVersion: v1
+    created: "2026-09-24T06:48:08.253458276Z"
+    description: Watchtower
+    digest: a8c28bf3d035d4695003f6bdbca0e9041d71467b62c8158ee565025bfde1c003
+    maintainers:
+    - email: yunus.sandikci@namecheap.com
+      name: yunussandikci
+    name: watchtower
+    sources:
+    - https://github.com/NCCloud/watchtower
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/watchtower-1.5.0/watchtower-1.5.0.tgz
+    version: 1.5.0
   - apiVersion: v1
     created: "2026-06-09T10:05:42.103689228Z"
     description: Watchtower
@@ -773,4 +801,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-03T08:41:00.469820413Z"
+generated: "2026-09-24T06:48:08.253619949Z"
