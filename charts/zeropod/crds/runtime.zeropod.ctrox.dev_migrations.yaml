@@ -71,8 +71,7 @@ spec:
                     name:
                       type: string
                     pageServer:
-                      description: |-
-                        PageServer to pull the memory pages from during
+                      description: PageServer to pull the memory pages from during
                         lazy migration.
                       properties:
                         host:
@@ -125,6 +124,9 @@ spec:
               targetPod:
                 description: TargetPod of the migration
                 type: string
+              targetPodIP:
+                description: TargetPodIP of the migration
+                type: string
             required:
             - containers
             - podTemplateHash
@@ -134,8 +136,7 @@ spec:
           status:
             properties:
               containers:
-                description: |-
-                  Containers indicates the status of the individual container
+                description: Containers indicates the status of the individual container
                   migrations.
                 items:
                   properties:

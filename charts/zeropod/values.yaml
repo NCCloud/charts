@@ -1,7 +1,7 @@
 # -- Enable GKE-specific host paths (sets zeropodOpt to /var/lib/toolbox/zeropod and passes -host-opt-path to the installer)
 gke: false
 
-# -- Enable K3s-specific host paths and pass -runtime=k3s -probe-binary-name=k3s to the installer
+# -- Enable K3s-specific host paths and pass -runtime=k3s to the installer
 k3s: false
 
 # -- Enable RKE2-specific host paths and pass -runtime=rke2 to the installer
@@ -35,7 +35,13 @@ image:
 
 installer:
   # -- CRIU container image pulled and installed by the installer init container
-  criuImage: ghcr.io/ctrox/zeropod-criu:v4.2
+  criuImage: ghcr.io/ctrox/zeropod-criu:v4.2.1
+
+  # -- Enable the shim to make a capacity request before restoring (experimental)
+  capacityRequest: false
+
+  # -- Enable the kernel-based reuseport activator instead of the userspace proxy (experimental, requires Linux 6.6+)
+  reuseportActivator: false
 
   # -- Run the installer in uninstall mode to remove all zeropod files from the host
   uninstall: false
@@ -43,6 +49,15 @@ installer:
 manager:
   # -- Enable debug logging in the manager
   debug: false
+
+  # -- Capacity eviction settings; prevents node out-of-memory scenarios by ensuring the node has enough resources to restore a container before allowing it to happen
+  capacityEviction: {}
+    # -- Timeout to wait for capacity eviction
+    # timeout: 1m
+    # -- Threshold at which capacity eviction starts; can be set above 1.0 for overprovisioning
+    # threshold: 1.0
+    # -- Use system memory instead of pod requests for capacity tracking
+    # systemMemory: false
 
   # -- Adjust pod resource requests to zero during scale-down; requires the InPlacePodVerticalScaling feature gate
   inPlaceScaling: true
