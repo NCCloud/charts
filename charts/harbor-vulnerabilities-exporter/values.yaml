@@ -17,18 +17,33 @@ existingSecret:
   usernameKey: username
   passwordKey: password
 
-# -- script won't use credentials if values are empty read-only user should be enough
+# -- script won't use credentials if values are empty (only public projects are visible), read-only robot account should be enough
 harborUsername: ""
 harborPassword: ""
 
-# -- additional environment variables to pass to the container
+# -- additional environment variables to pass to the container, see https://github.com/NCCloud/harbor-vulnerabilities-exporter#configuration
 extraEnv: []
+# -- seconds between Harbor crawls, metrics are served from the latest crawl results
+# - name: COLLECT_INTERVAL
+#   value: "300"
 # -- number of threads for exporter script to call Harbor API, 5 by default
 # - name: THREADS
 #   value: "5"
-# -- maximum number of characters to store in the description label, 0 by default means no limit
+# -- expose harbor_image_vulnerability metric with one series per vulnerability
+# - name: DETAILED_METRICS
+#   value: "true"
+# -- the lowest severity of harbor_image_vulnerability: Unknown, Low, Medium, High (default) or Critical
+# - name: MIN_SEVERITY
+#   value: "High"
+# -- expose only vulnerabilities with a fix version in harbor_image_vulnerability
+# - name: ONLY_FIXABLE
+#   value: "true"
+# -- expose harbor_vulnerability_info metric with descriptions of vulnerabilities
+# - name: INCLUDE_DESCRIPTION
+#   value: "true"
+# -- maximum number of characters of a description, 0 by default means no limit
 # - name: DESCRIPTION_MAX_LENGTH
-#   value: "0"
+#   value: "1024"
 
 image:
   repository: ghcr.io/nccloud/harbor-vulnerabilities-exporter
@@ -38,32 +53,49 @@ image:
 # -- resource requests and limits for the exporter container
 resources: {}
 #  limits:
-#    cpu: 200m
-#    memory: 128Mi
+#    memory: 256Mi
 #  requests:
-#    cpu: 100m
-#    memory: 64Mi
+#    cpu: 50m
+#    memory: 128Mi
 
-livenessProbe: {}
-#  httpGet:
-#    path: /metrics
-#    port: 8000
-#  initialDelaySeconds: 60
-#  periodSeconds: 60
-#  timeoutSeconds: 30
-#  failureThreshold: 3
+# -- pod security context
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
 
-readinessProbe: {}
-#  httpGet:
-#    path: /metrics
-#    port: 8000
-#  initialDelaySeconds: 30
-#  periodSeconds: 30
-#  timeoutSeconds: 30
-#  failureThreshold: 3
+# -- exporter container security context
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+    - ALL
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: metrics
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+# -- the exporter is ready after the first Harbor crawl
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: metrics
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
 
 serviceMonitor:
   # -- serviceMonitor can be disabled if needed
   enabled: true
   scrapeTimeout: "30s"
-  scrapeInterval: "300s"
+  # -- scrapes are served from cache, keep the interval below Prometheus lookback delta (5m)
+  scrapeInterval: "60s"
+  # -- fail the scrape if the exporter returns more samples, 0 means no limit
+  sampleLimit: 0
