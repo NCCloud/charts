@@ -1,6 +1,6 @@
 # harbor-vulnerabilities-exporter
 
-![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![AppVersion: 0.0.7](https://img.shields.io/badge/AppVersion-0.0.7-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for showing vulnerabilities information in images stored in Harbor
 
@@ -20,19 +20,26 @@ A Helm chart for showing vulnerabilities information in images stored in Harbor
 |-----|------|---------|-------------|
 | existingSecret | object | `{"passwordKey":"password","secretName":"","usernameKey":"username"}` | existing Secret with harbor credentials; if secretName is set, harborUsername and harborPassword are ignored |
 | exporterPort | int | `8000` |  |
-| extraEnv | list | `[]` | additional environment variables to pass to the container |
+| extraEnv | list | `[]` | additional environment variables to pass to the container, see https://github.com/NCCloud/harbor-vulnerabilities-exporter#configuration |
 | harborApiUrl | string | `"http://harbor-harbor-harbor-core.harbor/api/v2.0"` |  |
 | harborPassword | string | `""` |  |
-| harborUsername | string | `""` | script won't use credentials if values are empty read-only user should be enough |
+| harborUsername | string | `""` | script won't use credentials if values are empty (only public projects are visible), read-only robot account should be enough |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/nccloud/harbor-vulnerabilities-exporter"` |  |
 | image.tag | string | `""` |  |
-| livenessProbe | object | `{}` |  |
-| readinessProbe | object | `{}` |  |
+| livenessProbe.failureThreshold | int | `3` |  |
+| livenessProbe.httpGet.path | string | `"/healthz"` |  |
+| livenessProbe.httpGet.port | string | `"metrics"` |  |
+| livenessProbe.periodSeconds | int | `30` |  |
+| livenessProbe.timeoutSeconds | int | `5` |  |
+| podSecurityContext | object | `{"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | pod security context |
+| readinessProbe | object | `{"failureThreshold":3,"httpGet":{"path":"/ready","port":"metrics"},"periodSeconds":10,"timeoutSeconds":5}` | the exporter is ready after the first Harbor crawl |
 | replicas | int | `1` |  |
 | resources | object | `{}` | resource requests and limits for the exporter container |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | exporter container security context |
 | serviceMonitor.enabled | bool | `true` | serviceMonitor can be disabled if needed |
-| serviceMonitor.scrapeInterval | string | `"300s"` |  |
+| serviceMonitor.sampleLimit | int | `0` | fail the scrape if the exporter returns more samples, 0 means no limit |
+| serviceMonitor.scrapeInterval | string | `"60s"` | scrapes are served from cache, keep the interval below Prometheus lookback delta (5m) |
 | serviceMonitor.scrapeTimeout | string | `"30s"` |  |
 
 ----------------------------------------------
