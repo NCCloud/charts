@@ -14,6 +14,9 @@ spec:
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
+  {{- with .Values.serviceMonitor.sampleLimit }}
+  sampleLimit: {{ . }}
+  {{- end }}
   endpoints:
     - port: metrics
       scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
