@@ -75,6 +75,21 @@ entries:
     version: 1.0.0
   harbor-vulnerabilities-exporter:
   - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-10-23T09:35:00.818417815Z"
+    description: A Helm chart for showing vulnerabilities information in images stored
+      in Harbor
+    digest: a115124cfdb5409c48b265a8afb143b8536b5b9c526dbd537ae5aab3ea41dbe0
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: harbor-vulnerabilities-exporter
+    sources:
+    - https://github.com/NCCloud/harbor-vulnerabilities-exporter
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/harbor-vulnerabilities-exporter-2.0.0/harbor-vulnerabilities-exporter-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: 0.0.7
     created: "2026-03-11T11:27:57.546297336Z"
     description: A Helm chart for showing vulnerabilities information in images stored
@@ -817,4 +832,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-28T12:00:19.227001219Z"
+generated: "2026-10-23T09:35:00.81852346Z"
