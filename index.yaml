@@ -339,6 +339,20 @@ entries:
     version: 1.0.0
   metadata-reflector:
   - apiVersion: v1
+    appVersion: 0.4.2
+    created: "2026-11-05T13:05:24.251464912Z"
+    description: Metadata Reflector
+    digest: 4b8cf951dd85b79ac663bcec49c5843b1a21c5cd082f06379f61bba0e14e5cff
+    maintainers:
+    - email: oleg.neychev@namecheap.com
+      name: BonySmoke
+    name: metadata-reflector
+    sources:
+    - https://github.com/NCCloud/metadata-reflector
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/metadata-reflector-0.3.2/metadata-reflector-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v1
     appVersion: 0.4.1
     created: "2026-02-24T11:05:16.909070117Z"
     description: Metadata Reflector
@@ -870,4 +884,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-05T12:41:00.754442654Z"
+generated: "2026-11-05T13:05:24.251621604Z"
