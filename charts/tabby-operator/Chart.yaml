@@ -1,7 +1,8 @@
 apiVersion: v2
 name: tabby-operator
 description: A Helm chart for Kubernetes tabby cni operator
-version: 0.0.43
+version: 0.0.44
+appVersion: "0.0.44"
 sources:
   - https://github.com/NCCloud/tabby-cni
 maintainers:
