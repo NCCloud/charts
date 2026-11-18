@@ -484,6 +484,20 @@ entries:
     version: 0.1.0
   tabby-operator:
   - apiVersion: v2
+    appVersion: 0.0.45
+    created: "2026-11-18T14:34:50.967337401Z"
+    description: A Helm chart for Kubernetes tabby cni operator
+    digest: 8fdac222a1c80f27e640900047076f83ed98e3b213070ae52ace32e16250df5c
+    maintainers:
+    - email: vladyslav.riabik@namecheap.com
+      name: vriabyk
+    name: tabby-operator
+    sources:
+    - https://github.com/NCCloud/tabby-cni
+    urls:
+    - https://github.com/NCCloud/charts/releases/download/tabby-operator-0.0.45/tabby-operator-0.0.45.tgz
+    version: 0.0.45
+  - apiVersion: v2
     appVersion: 0.0.44
     created: "2026-11-18T11:26:18.826000017Z"
     description: A Helm chart for Kubernetes tabby cni operator
@@ -898,4 +912,4 @@ entries:
     urls:
     - https://github.com/NCCloud/charts/releases/download/zeropod-0.1.0/zeropod-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-18T11:26:18.826142621Z"
+generated: "2026-11-18T14:34:50.967492189Z"
