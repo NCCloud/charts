@@ -1,6 +1,6 @@
 # tabby-operator
 
-![Version: 0.0.43](https://img.shields.io/badge/Version-0.0.43-informational?style=flat-square)
+![Version: 0.0.44](https://img.shields.io/badge/Version-0.0.44-informational?style=flat-square) ![AppVersion: 0.0.44](https://img.shields.io/badge/AppVersion-0.0.44-informational?style=flat-square)
 
 A Helm chart for Kubernetes tabby cni operator
 
@@ -23,7 +23,7 @@ A Helm chart for Kubernetes tabby cni operator
 | affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0] | string | `"linux"` |  |
 | fullnameOverride | string | `""` |  |
 | image.repository | string | `"ghcr.io/nccloud/tabby-operator"` |  |
-| image.tag | string | `"latest"` |  |
+| image.tag | string | `""` | Overrides the image tag. Defaults to the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
